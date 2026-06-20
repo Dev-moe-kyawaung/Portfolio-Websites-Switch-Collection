@@ -1,0 +1,101 @@
+# ── macOS ─────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+.AppleDouble
+.LSOverride
+Icon
+
+# ── Windows ───────────────────────────────────────────
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ── Linux ─────────────────────────────────────────────
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ── Editor / IDE ───────────────────────────────────────
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+
+# ── Node.js ───────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm
+.yarn-integrity
+package-lock.json
+yarn.lock
+
+# ── Build outputs ─────────────────────────────────────
+dist/
+build/
+out/
+.cache/
+.parcel-cache/
+
+# ── Environment / Secrets ─────────────────────────────
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*.local
+*.secret
+secrets.json
+
+# ── Logs ──────────────────────────────────────────────
+*.log
+logs/
+npm-debug.log
+yarn-debug.log
+
+# ── Temporary files ───────────────────────────────────
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# ── Archive files (don't commit .zip backups) ─────────
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# ── Testing ───────────────────────────────────────────
+coverage/
+.nyc_output/
+*.lcov
+
+# ── Thumbnails ────────────────────────────────────────
+._*
+
+# ── Project-specific ──────────────────────────────────
+# Keep assets tracked, but ignore personal drafts
+drafts/
+_private/
+todo.txt
+notes.txt
