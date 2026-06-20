@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <!-- ============================================================
+       MOE KYAW AUNG — Portfolio V8
+       Senior Android Developer · Tachileik, Myanmar
+       Glassmorphism · Charcoal · Gunmetal · Khaki · Sand
+  ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Moe Kyaw Aung — Senior Android Developer with 12 years of experience building secure, scalable, and user-friendly mobile applications using Kotlin and Jetpack Compose." />
+  <meta name="keywords" content="Android Developer, Kotlin, Jetpack Compose, Firebase, MVVM, Clean Architecture, Myanmar, Microsoft" />
+  <meta name="author" content="Moe Kyaw Aung" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Moe Kyaw Aung | Senior Android Developer" />
+  <meta property="og:description" content="12 years building secure, scalable Android apps — Kotlin · Jetpack Compose · Firebase · Clean Architecture" />
+  <meta property="og:image" content="https://0.gravatar.com/avatar/a2dae9a29fbf7c72552047efc744be54a018938aacd9009e7500f93d72eb0f2e?size=512" />
+  <meta property="og:type" content="website" />
+  <title>Moe Kyaw Aung | Senior Android Developer — Portfolio V8</title>
+
+  <!-- Google Fonts: Playfair Display + DM Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['attribute', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          colors: {
+            charcoal: '#222831',
+            gunmetal: '#393E46',
+            khaki:    '#948979',
+            sand:     '#DFD0B8',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            mono:    ['"DM Mono"', 'monospace'],
+            sans:    ['Syne', 'sans-serif'],
+          },
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ── CSS Custom Properties ───────────────────────── */
+    :root {
+      --bg:          #222831;
+      --surface:     #393E46;
+      --accent:      #948979;
+      --light:       #DFD0B8;
+      --glass-bg:    rgba(57, 62, 70, 0.45);
+      --glass-border:rgba(148, 137, 121, 0.25);
+      --glass-blur:  blur(18px);
+      --shadow-lg:   0 24px 64px rgba(0,0,0,0.45);
+      --radius:      16px;
+      --transition:  0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    [data-theme="light"] {
+      --bg:          #f5f0eb;
+      --surface:     #e8e0d5;
+      --accent:      #6b5e4e;
+      --light:       #3a3028;
+      --glass-bg:    rgba(232, 224, 213, 0.65);
+      --glass-border:rgba(100, 80, 60, 0.2);
+    }
+
+    /* ── Base Reset ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--light);
+      overflow-x: hidden;
+      cursor: none;
+    }
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    /* ── Custom Cursor ───────────────────────────────── */
+    #cursor-dot, #cursor-ring {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+    }
+    #cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+    }
+    #cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--accent);
+      transition: transform 0.12s ease, width 0.2s, height 0.2s, border-color 0.2s;
+    }
+    body:hover #cursor-dot, body:hover #cursor-ring { opacity: 1; }
+
+    /* ── Preloader ───────────────────────────────────── */
+    #preloader {
+      position: fixed; inset: 0;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10000;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #preloader.hidden { opacity: 0; visibility: hidden; }
+    .loader-text {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(0.75rem, 2vw, 1rem);
+      color: var(--accent);
+      letter-spacing: 0.2em;
+    }
+    .loader-bar {
+      width: 220px; height: 2px;
+      background: var(--surface);
+      margin-top: 1.5rem;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loader-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--sand));
+      border-radius: 2px;
+      animation: loadFill 2.2s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    @keyframes loadFill { from { width: 0 } to { width: 100% } }
+
+    /* ── Glassmorphism Card ──────────────────────────── */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+    }
+
+    /* ── Navigation ──────────────────────────────────── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: var(--transition);
+    }
+    #navbar.scrolled {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--sand);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--light);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .nav-links a:hover { color: var(--sand); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-actions { display: flex; align-items: center; gap: 1rem; }
+    .btn-theme {
+      background: none; border: 1px solid var(--glass-border);
+      border-radius: 50%; width: 38px; height: 38px;
+      color: var(--accent); cursor: none;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; transition: var(--transition);
+    }
+    .btn-theme:hover { background: var(--accent); color: var(--bg); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--sand); border-radius: 2px;
+      transition: var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    #mobile-menu {
+      position: fixed; inset: 0; top: 70px;
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2.5rem;
+      z-index: 999;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    #mobile-menu.open { transform: translateX(0); }
+    #mobile-menu a {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--sand);
+      text-decoration: none; font-style: italic;
+      transition: color var(--transition);
+    }
+    #mobile-menu a:hover { color: var(--accent); }
+
+    /* ── Hero ─────────────────────────────────────────── */
+    #hero {
+      position: relative; height: 100vh; min-height: 700px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    #particle-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      max-width: 860px; padding: 0 2rem;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      padding: 0.4rem 1.2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(8px);
+    }
+    .hero-badge::before {
+      content: ''; display: block;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(148,137,121,0.6); }
+      50%      { box-shadow: 0 0 0 8px rgba(148,137,121,0); }
+    }
+    .hero-avatar {
+      width: 110px; height: 110px; border-radius: 50%;
+      border: 3px solid var(--accent);
+      object-fit: cover;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 0 0 6px rgba(148,137,121,0.15);
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: var(--sand);
+      margin-bottom: 0.5rem;
+    }
+    .hero-name em { color: var(--accent); font-style: italic; }
+    .hero-tagline {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(0.85rem, 2vw, 1.05rem);
+      color: var(--khaki);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-desc {
+      font-size: 1rem; line-height: 1.75;
+      color: var(--light); opacity: 0.8;
+      max-width: 560px; margin: 0 auto 2.5rem;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: linear-gradient(135deg, var(--accent), var(--khaki));
+      color: var(--bg); font-weight: 700;
+      font-size: 0.9rem; letter-spacing: 0.08em;
+      padding: 0.85rem 2.2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 8px 32px rgba(148,137,121,0.35);
+    }
+    .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(148,137,121,0.5); }
+    .hero-cta-ghost {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      border: 1px solid var(--glass-border);
+      color: var(--sand); font-weight: 600;
+      font-size: 0.9rem; letter-spacing: 0.08em;
+      padding: 0.85rem 2.2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: var(--transition);
+      backdrop-filter: blur(8px);
+      background: var(--glass-bg);
+    }
+    .hero-cta-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-indicator {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase;
+      animation: bounce 2.5s infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    /* ── Section Commons ─────────────────────────────── */
+    section { padding: 5rem 0; position: relative; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 2rem; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--sand); line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 3px; margin-bottom: 3rem;
+    }
+
+    /* ── Fade-in animations ──────────────────────────── */
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-in-left { opacity:0; transform:translateX(-40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in-left.visible { opacity:1; transform:translateX(0); }
+    .fade-in-right { opacity:0; transform:translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in-right.visible { opacity:1; transform:translateX(0); }
+
+    /* ── Stats Section ───────────────────────────────── */
+    #stats { background: var(--surface); }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
+    .stat-card {
+      text-align: center; padding: 2rem 1rem;
+    }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem; font-weight: 800;
+      color: var(--sand); line-height: 1;
+      display: flex; align-items: center; justify-content: center; gap: 2px;
+    }
+    .stat-number sup { font-size: 1.5rem; color: var(--accent); }
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--khaki);
+      margin-top: 0.5rem;
+    }
+
+    /* ── About ───────────────────────────────────────── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap::before {
+      content: ''; position: absolute;
+      inset: -12px; border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      z-index: 0;
+    }
+    .about-img {
+      width: 100%; border-radius: 16px;
+      object-fit: cover; position: relative; z-index: 1;
+      filter: grayscale(20%);
+    }
+    .about-badge {
+      position: absolute; bottom: -20px; right: -20px; z-index: 2;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem; color: var(--sand);
+    }
+    .about-badge strong { font-size: 1.8rem; color: var(--accent); display: block; line-height: 1; }
+    .tech-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .chip {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.1em;
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      border: 1px solid var(--glass-border);
+      color: var(--khaki);
+      background: var(--glass-bg);
+      backdrop-filter: blur(6px);
+      transition: var(--transition);
+    }
+    .chip:hover { border-color: var(--accent); color: var(--sand); }
+
+    /* ── Services / Skills ───────────────────────────── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .skill-card {
+      padding: 2rem; cursor: none;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .skill-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .skill-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--khaki));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; color: var(--bg); margin-bottom: 1.25rem;
+    }
+    .skill-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--sand); margin-bottom: 0.5rem; }
+    .skill-card p { font-size: 0.9rem; color: var(--khaki); line-height: 1.7; }
+    .skill-bar-wrap { margin-top: 1rem; }
+    .skill-bar-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--khaki); margin-bottom: 0.4rem; }
+    .skill-bar { height: 4px; background: var(--surface); border-radius: 4px; overflow: hidden; }
+    .skill-bar-fill {
+      height: 100%; border-radius: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--sand));
+      width: 0; transition: width 1.2s ease;
+    }
+
+    /* ── Portfolio Gallery ───────────────────────────── */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .gallery-item {
+      position: relative; border-radius: 14px; overflow: hidden;
+      cursor: none; aspect-ratio: 4/3;
+    }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .gallery-item:hover img { transform: scale(1.08); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(34,40,49,0.92), transparent);
+      opacity: 0; transition: opacity var(--transition);
+      display: flex; align-items: flex-end; padding: 1.5rem;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--sand); }
+    .gallery-overlay p { font-size: 0.8rem; color: var(--khaki); margin-top: 0.25rem; }
+
+    /* Lightbox */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 5000;
+      background: rgba(34,40,49,0.96);
+      display: none; align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 12px; object-fit: contain; }
+    #lightbox-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      font-size: 2rem; color: var(--sand); cursor: none;
+      background: none; border: none; line-height: 1;
+    }
+
+    /* ── Testimonials ────────────────────────────────── */
+    .testimonial-wrap { position: relative; overflow: hidden; }
+    .testimonial-track { display: flex; transition: transform 0.5s ease; }
+    .testimonial-card {
+      min-width: 100%; padding: 0 1rem;
+    }
+    .t-inner { padding: 2.5rem; max-width: 720px; margin: 0 auto; text-align: center; }
+    .t-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.25rem; border: 2px solid var(--accent); }
+    .t-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-style: italic;
+      color: var(--sand); line-height: 1.75; margin-bottom: 1.25rem;
+    }
+    .t-name { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; }
+    .t-role { font-size: 0.8rem; color: var(--khaki); margin-top: 0.25rem; }
+    .slider-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; }
+    .slider-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--glass-border);
+      cursor: none; transition: background var(--transition);
+    }
+    .slider-dot.active { background: var(--accent); }
+
+    /* ── Pricing ─────────────────────────────────────── */
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.5rem; }
+    .pricing-card {
+      padding: 2.5rem 2rem; text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .pricing-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 24px 64px rgba(148,137,121,0.25);
+    }
+    .pricing-card.featured::before {
+      content: 'MOST POPULAR';
+      position: absolute; top: 1rem; right: 1rem;
+      font-family: 'DM Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.2em; padding: 0.3rem 0.8rem;
+      background: var(--accent); color: var(--bg);
+      border-radius: 100px;
+    }
+    .pricing-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .pricing-tier { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--khaki); margin-bottom: 1rem; }
+    .pricing-amount { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--sand); line-height: 1; }
+    .pricing-amount sup { font-size: 1.5rem; color: var(--accent); vertical-align: super; }
+    .pricing-period { font-size: 0.85rem; color: var(--khaki); margin-bottom: 2rem; }
+    .pricing-features { list-style: none; text-align: left; margin-bottom: 2rem; }
+    .pricing-features li {
+      padding: 0.6rem 0; font-size: 0.9rem; color: var(--light);
+      border-bottom: 1px solid var(--glass-border);
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .pricing-features li i { color: var(--accent); font-size: 0.8rem; }
+    .btn-pricing {
+      display: block; width: 100%;
+      padding: 0.85rem; border-radius: 100px;
+      font-weight: 700; font-size: 0.9rem;
+      letter-spacing: 0.08em; text-decoration: none;
+      transition: var(--transition); cursor: none;
+      border: 1px solid var(--accent);
+      color: var(--sand); background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+    }
+    .btn-pricing:hover, .pricing-card.featured .btn-pricing {
+      background: linear-gradient(135deg, var(--accent), var(--khaki));
+      color: var(--bg); box-shadow: 0 8px 24px rgba(148,137,121,0.3);
+    }
+
+    /* ── FAQ ─────────────────────────────────────────── */
+    .faq-item {
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1.5rem 0;
+    }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: none; font-size: 1rem; color: var(--sand);
+      font-weight: 600; gap: 1rem;
+    }
+    .faq-q i { color: var(--accent); font-size: 0.85rem; flex-shrink: 0; transition: transform var(--transition); }
+    .faq-item.open .faq-q i { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      font-size: 0.92rem; line-height: 1.75; color: var(--khaki);
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-top: 1rem; }
+
+    /* ── Contact Form ────────────────────────────────── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--khaki); margin-bottom: 0.5rem; }
+    .form-input {
+      width: 100%; padding: 0.85rem 1.1rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px; color: var(--sand);
+      font-family: 'Syne', sans-serif; font-size: 0.95rem;
+      outline: none; transition: border-color var(--transition);
+      backdrop-filter: blur(8px);
+    }
+    .form-input:focus { border-color: var(--accent); }
+    .form-input::placeholder { color: var(--khaki); opacity: 0.6; }
+    .form-error { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #e07070; margin-top: 0.35rem; display: none; }
+    .form-group.invalid .form-error { display: block; }
+    .form-group.invalid .form-input { border-color: #e07070; }
+    .btn-submit {
+      width: 100%; padding: 1rem;
+      background: linear-gradient(135deg, var(--accent), var(--khaki));
+      color: var(--bg); font-weight: 700; font-size: 0.95rem;
+      letter-spacing: 0.1em; border: none; border-radius: 100px;
+      cursor: none; transition: var(--transition);
+      box-shadow: 0 8px 24px rgba(148,137,121,0.3);
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(148,137,121,0.45); }
+    .contact-info-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 2rem; }
+    .contact-info-item i { font-size: 1.1rem; color: var(--accent); margin-top: 0.2rem; }
+    .contact-info-item h4 { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--khaki); }
+    .contact-info-item p, .contact-info-item a { color: var(--sand); font-size: 0.95rem; text-decoration: none; }
+    .contact-info-item a:hover { color: var(--accent); }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      background: linear-gradient(180deg, var(--surface) 0%, #1a1e24 100%);
+      border-top: 1px solid var(--glass-border);
+      padding-top: 4rem;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand p { font-size: 0.9rem; color: var(--khaki); line-height: 1.75; margin-top: 1rem; max-width: 280px; }
+    .footer-heading { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 0.6rem; }
+    footer ul a { color: var(--khaki); text-decoration: none; font-size: 0.9rem; transition: color var(--transition); }
+    footer ul a:hover { color: var(--sand); }
+    .social-icons { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .social-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--khaki); font-size: 0.9rem;
+      text-decoration: none; transition: var(--transition);
+    }
+    .social-icon:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .newsletter-form { display: flex; gap: 0.5rem; margin-top: 1rem; }
+    .newsletter-input {
+      flex: 1; padding: 0.65rem 1rem;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 100px; color: var(--sand); font-family: 'Syne', sans-serif;
+      font-size: 0.85rem; outline: none;
+    }
+    .newsletter-input:focus { border-color: var(--accent); }
+    .newsletter-input::placeholder { color: var(--khaki); opacity: 0.6; }
+    .newsletter-btn {
+      padding: 0.65rem 1.25rem;
+      background: var(--accent); color: var(--bg);
+      border: none; border-radius: 100px;
+      font-weight: 700; font-size: 0.8rem;
+      cursor: none; transition: var(--transition);
+    }
+    .newsletter-btn:hover { background: var(--sand); }
+    .footer-map { border-radius: 12px; overflow: hidden; margin-top: 1rem; }
+    .footer-bottom {
+      border-top: 1px solid var(--glass-border);
+      padding: 1.5rem 0; display: flex;
+      justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--khaki); letter-spacing: 0.1em; }
+    .burmese { font-size: 0.85rem; color: var(--accent); }
+
+    /* ── Back to Top ─────────────────────────────────── */
+    #back-top {
+      position: fixed; bottom: 2rem; right: 2rem;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--accent); color: var(--bg);
+      border: none; cursor: none; z-index: 900;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity var(--transition), transform var(--transition);
+      box-shadow: 0 4px 16px rgba(148,137,121,0.4);
+    }
+    #back-top.visible { opacity: 1; transform: translateY(0); }
+    #back-top:hover { background: var(--sand); }
+
+    /* ── Sticky CTA ──────────────────────────────────── */
+    #sticky-cta {
+      position: fixed; bottom: 2rem; left: 2rem;
+      background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      z-index: 900;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    #sticky-cta.visible { opacity: 1; transform: translateY(0); }
+    #sticky-cta a {
+      font-family: 'DM Mono', monospace; font-size: 0.75rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--sand); text-decoration: none;
+      transition: color var(--transition);
+    }
+    #sticky-cta a:hover { color: var(--accent); }
+    #sticky-cta i { color: var(--accent); }
+
+    /* ── Parallax ────────────────────────────────────── */
+    .parallax-layer { will-change: transform; }
+
+    /* ── Myanmar flag accent ─────────────────────────── */
+    .mm-flag {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.8rem; color: var(--khaki);
+    }
+
+    /* ── Responsive ──────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .about-badge { right: 0; bottom: -30px; }
+    }
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+    }
+    @media (max-width: 500px) {
+      .hero-name { font-size: 2.4rem; }
+      .pricing-grid, .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════ CUSTOM CURSOR ═══════════ -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ═══════════ PRELOADER ═══════════ -->
+  <div id="preloader" role="status" aria-label="Loading">
+    <div style="text-align:center">
+      <div class="loader-text">MOE KYAW AUNG // INITIALIZING</div>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+      <div class="loader-text" style="margin-top:1rem;font-size:0.65rem;opacity:0.5">မိုးကျော်အောင် · Senior Android Developer</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ NAVIGATION ═══════════ -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav-logo">MKA<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="theme-toggle" aria-label="Toggle dark/light mode">
+        <i class="fa-solid fa-moon" id="theme-icon"></i>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <a href="#about" class="mobile-link">About</a>
+    <a href="#skills" class="mobile-link">Skills</a>
+    <a href="#work" class="mobile-link">Work</a>
+    <a href="#pricing" class="mobile-link">Pricing</a>
+    <a href="#faq" class="mobile-link">FAQ</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+  </div>
+
+  <!-- ═══════════ PAGE 1 — HERO ═══════════ -->
+  <section id="hero" aria-label="Hero section">
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>Available for Projects · 2025</span>
+      </div>
+      <!-- Gravatar profile image -->
+      <img
+        src="https://0.gravatar.com/avatar/a2dae9a29fbf7c72552047efc744be54a018938aacd9009e7500f93d72eb0f2e?size=256"
+        alt="Moe Kyaw Aung — Senior Android Developer"
+        class="hero-avatar"
+        loading="eager"
+      />
+      <h1 class="hero-name">
+        Moe <em>Kyaw</em><br>Aung
+      </h1>
+      <p class="hero-tagline">Senior Android Developer · Microsoft · Tachileik, Myanmar</p>
+      <p class="hero-desc">
+        Nearly 12 years building secure, scalable mobile experiences with Kotlin &amp;
+        Jetpack Compose. From architecture to release — I own the full stack.
+      </p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="#work" class="hero-cta">
+          <i class="fa-solid fa-rocket"></i> View My Work
+        </a>
+        <a href="#contact" class="hero-cta-ghost">
+          <i class="fa-solid fa-envelope"></i> Let's Talk
+        </a>
+      </div>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true">
+      <span>Scroll</span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- ═══════════ STATS ═══════════ -->
+  <section id="stats" aria-label="Career statistics">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card glass fade-in">
+          <div class="stat-number"><span class="counter" data-target="12">0</span><sup>+</sup></div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card glass fade-in" style="transition-delay:0.1s">
+          <div class="stat-number"><span class="counter" data-target="48">0</span><sup>+</sup></div>
+          <div class="stat-label">Apps Shipped</div>
+        </div>
+        <div class="stat-card glass fade-in" style="transition-delay:0.2s">
+          <div class="stat-number"><span class="counter" data-target="35">0</span><sup>+</sup></div>
+          <div class="stat-label">Certifications</div>
+        </div>
+        <div class="stat-card glass fade-in" style="transition-delay:0.3s">
+          <div class="stat-number"><span class="counter" data-target="99">0</span><sup>%</sup></div>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
+        <div class="stat-card glass fade-in" style="transition-delay:0.4s">
+          <div class="stat-number"><span class="counter" data-target="1200000">0</span><sup>+</sup></div>
+          <div class="stat-label">Downloads Reached</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PAGE 2 — ABOUT ═══════════ -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-wrap fade-in-left">
+          <img
+            src="https://0.gravatar.com/avatar/a2dae9a29fbf7c72552047efc744be54a018938aacd9009e7500f93d72eb0f2e?size=512"
+            alt="Moe Kyaw Aung profile"
+            class="about-img"
+          />
+          <div class="about-badge glass">
+            <strong>12</strong>
+            Years in Android
+          </div>
+        </div>
+        <div class="fade-in-right" style="transition-delay:0.15s">
+          <div class="section-label">About Me / ကျွန်တော်အကြောင်း</div>
+          <h2 class="section-title" id="about-heading">
+            Engineering Apps That<br><em style="font-style:italic;color:var(--accent)">Actually Ship.</em>
+          </h2>
+          <div class="section-divider"></div>
+          <p style="color:var(--khaki);line-height:1.85;margin-bottom:1rem">
+            I'm a Senior Android Developer at <strong style="color:var(--sand)">Microsoft</strong>, based in Tachileik, Myanmar.
+            With nearly 12 years of hands-on experience, I specialise in building production-grade Android
+            applications that are secure by design, scalable by architecture, and delightful to use.
+          </p>
+          <p style="color:var(--khaki);line-height:1.85;margin-bottom:1.5rem">
+            My core philosophy is simple: clean architecture, maintainable code, and practical security.
+            I'm comfortable owning features end-to-end — from UI design in Jetpack Compose to networking,
+            local caching with Room, rigorous testing, and release-ready CI/CD pipelines.
+          </p>
+          <div class="mm-flag">
+            <img src="https://flagcdn.com/24x18/mm.png" alt="Myanmar flag" style="border-radius:2px" />
+            မိုးကျော်အောင် · Tachileik, Myanmar
+          </div>
+          <div class="tech-chips">
+            <span class="chip">Kotlin</span>
+            <span class="chip">Jetpack Compose</span>
+            <span class="chip">MVVM</span>
+            <span class="chip">Clean Architecture</span>
+            <span class="chip">Firebase</span>
+            <span class="chip">REST API</span>
+            <span class="chip">Room DB</span>
+            <span class="chip">GitHub Actions</span>
+            <span class="chip">Coroutines</span>
+            <span class="chip">Hilt / Dagger</span>
+            <span class="chip">Retrofit</span>
+            <span class="chip">Unit Testing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PAGE 3 — SKILLS / SERVICES ═══════════ -->
+  <section id="skills" style="background:var(--surface)" aria-labelledby="skills-heading">
+    <div class="container">
+      <div class="section-label" style="text-align:center">What I Do</div>
+      <h2 class="section-title" id="skills-heading" style="text-align:center">
+        Core Services &amp; Expertise
+      </h2>
+      <div class="section-divider" style="margin:0 auto 3rem"></div>
+
+      <div class="skills-grid">
+        <!-- Card 1 -->
+        <div class="skill-card glass fade-in">
+          <div class="skill-icon"><i class="fa-brands fa-android"></i></div>
+          <h3>Android Development</h3>
+          <p>Full-lifecycle Android app development using modern Jetpack libraries, Material 3 design system, and Kotlin coroutines for async operations.</p>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar-label"><span>Kotlin / Compose</span><span>98%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="98"></div></div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="skill-card glass fade-in" style="transition-delay:0.1s">
+          <div class="skill-icon"><i class="fa-solid fa-layer-group"></i></div>
+          <h3>Architecture &amp; Design</h3>
+          <p>Designing MVVM / Clean Architecture systems that are maintainable at scale. Dependency injection with Hilt, modular Gradle setups, and feature-flagged builds.</p>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar-label"><span>MVVM / Clean Arch</span><span>96%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="96"></div></div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="skill-card glass fade-in" style="transition-delay:0.2s">
+          <div class="skill-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3>Security &amp; Compliance</h3>
+          <p>Implementing encryption, certificate pinning, ProGuard obfuscation, and ethical hacking principles to build apps that pass rigorous security audits.</p>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar-label"><span>Security Implementation</span><span>92%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="92"></div></div>
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="skill-card glass fade-in" style="transition-delay:0.3s">
+          <div class="skill-icon"><i class="fa-solid fa-fire"></i></div>
+          <h3>Firebase &amp; Backend</h3>
+          <p>Firebase Firestore, Realtime Database, Cloud Functions, Authentication, Analytics, and Crashlytics integration for production-grade backend connectivity.</p>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar-label"><span>Firebase / REST</span><span>95%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="95"></div></div>
+          </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="skill-card glass fade-in" style="transition-delay:0.4s">
+          <div class="skill-icon"><i class="fa-solid fa-vial"></i></div>
+          <h3>Testing &amp; CI/CD</h3>
+          <p>Unit tests with JUnit5, UI tests with Espresso, GitHub Actions pipelines for automated lint, build, test, signing, and deployment to Play Store.</p>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar-label"><span>Testing / DevOps</span><span>90%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div>
+          </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="skill-card glass fade-in" style="transition-delay:0.5s">
+          <div class="skill-icon"><i class="fa-solid fa-brain"></i></div>
+          <h3>AI / ML Integration</h3>
+          <p>On-device ML with TensorFlow Lite &amp; ML Kit, Claude API &amp; Gemini integration for intelligent Android features — translation, vision, and smart assistants.</p>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar-label"><span>AI / ML Features</span><span>85%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="85"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ WORK / GALLERY ═══════════ -->
+  <section id="work" aria-labelledby="work-heading">
+    <div class="container">
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title" id="work-heading">Selected Work</h2>
+      <div class="section-divider"></div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item fade-in" data-img="https://picsum.photos/seed/android1/800/600" data-title="MoekyawTranslator">
+          <img src="https://picsum.photos/seed/android1/800/600" alt="MoekyawTranslator Android App" loading="lazy" />
+          <div class="gallery-overlay">
+            <div>
+              <h4>MoekyawTranslator</h4>
+              <p>Claude API · Kotlin · Jetpack Compose · 8 Languages</p>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item fade-in" data-img="https://picsum.photos/seed/android2/800/600" data-title="CI/CD Suite">
+          <img src="https://picsum.photos/seed/android2/800/600" alt="Android CI/CD Suite" loading="lazy" />
+          <div class="gallery-overlay">
+            <div>
+              <h4>Android CI/CD Suite</h4>
+              <p>GitHub Actions · 5 Workflows · Automated Release</p>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item fade-in" data-img="https://picsum.photos/seed/android3/800/600" data-title="Compose Design System">
+          <img src="https://picsum.photos/seed/android3/800/600" alt="Jetpack Compose Design System" loading="lazy" />
+          <div class="gallery-overlay">
+            <div>
+              <h4>Compose Design System</h4>
+              <p>100+ Components · Material 3 · Dark/Light Theming</p>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item fade-in" data-img="https://picsum.photos/seed/android4/800/600" data-title="Thailand Resources App">
+          <img src="https://picsum.photos/seed/android4/800/600" alt="Thailand Resources for Myanmar Workers" loading="lazy" />
+          <div class="gallery-overlay">
+            <div>
+              <h4>Thailand Resources Hub</h4>
+              <p>Community App · Myanmar Workers · Bilingual UI</p>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item fade-in" data-img="https://picsum.photos/seed/android5/800/600" data-title="Acode DevX Plugin">
+          <img src="https://picsum.photos/seed/android5/800/600" alt="Acode DevX Plugin" loading="lazy" />
+          <div class="gallery-overlay">
+            <div>
+              <h4>Acode DevX Plugin</h4>
+              <p>13 Themes · Mobile Code Editor · Published Plugin</p>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item fade-in" data-img="https://picsum.photos/seed/android6/800/600" data-title="3D Architecture Visualizer">
+          <img src="https://picsum.photos/seed/android6/800/600" alt="3D Android Architecture Visualizer" loading="lazy" />
+          <div class="gallery-overlay">
+            <div>
+              <h4>3D Architecture Visualizer</h4>
+              <p>Three.js · Claude API · Interactive MVVM Diagram</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:1.5rem">
+        <a href="https://github.com/Dev-moe-kyawaung/" target="_blank" rel="noopener noreferrer" class="hero-cta-ghost" style="display:inline-flex">
+          <i class="fa-brands fa-github"></i> View All on GitHub
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" role="dialog" aria-label="Image lightbox" aria-modal="true">
+    <button id="lightbox-close" aria-label="Close lightbox">&times;</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <!-- ═══════════ TESTIMONIALS ═══════════ -->
+  <section id="testimonials" style="background:var(--surface)" aria-label="Testimonials">
+    <div class="container">
+      <div class="section-label" style="text-align:center">Testimonials</div>
+      <h2 class="section-title" style="text-align:center">What Clients Say</h2>
+      <div class="section-divider" style="margin:0 auto 3rem"></div>
+
+      <div class="testimonial-wrap fade-in">
+        <div class="testimonial-track" id="testimonial-track">
+          <!-- Slide 1 -->
+          <div class="testimonial-card">
+            <div class="t-inner glass">
+              <img src="https://picsum.photos/seed/t1/128/128" alt="Sarah K." class="t-avatar" />
+              <p class="t-quote">"Moe delivered a complete MVVM Android app in record time. The architecture is clean, the code is readable, and the app has not had a single crash in 8 months of production. Exceptional work."</p>
+              <div class="t-name">Sarah K.</div>
+              <div class="t-role">CTO · FinTech Startup, Singapore</div>
+            </div>
+          </div>
+          <!-- Slide 2 -->
+          <div class="testimonial-card">
+            <div class="t-inner glass">
+              <img src="https://picsum.photos/seed/t2/128/128" alt="Arjun Mehta" class="t-avatar" />
+              <p class="t-quote">"The CI/CD pipeline Moe built with GitHub Actions saved our team 4 hours per week. Automated lint checks, instrumented tests, and signed release APKs — all configured perfectly."</p>
+              <div class="t-name">Arjun Mehta</div>
+              <div class="t-role">Lead Engineer · E-Commerce Platform, India</div>
+            </div>
+          </div>
+          <!-- Slide 3 -->
+          <div class="testimonial-card">
+            <div class="t-inner glass">
+              <img src="https://picsum.photos/seed/t3/128/128" alt="Khin Moe" class="t-avatar" />
+              <p class="t-quote">"Working with Moe felt like having a senior Android architect in-house. His understanding of Firebase, security, and Jetpack Compose is top-tier. I'd rehire in a heartbeat."</p>
+              <div class="t-name">Khin Moe</div>
+              <div class="t-role">Founder · MyanmarTech App, Yangon</div>
+            </div>
+          </div>
+        </div>
+        <div class="slider-dots" id="slider-dots">
+          <button class="slider-dot active" data-index="0" aria-label="Slide 1"></button>
+          <button class="slider-dot" data-index="1" aria-label="Slide 2"></button>
+          <button class="slider-dot" data-index="2" aria-label="Slide 3"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PAGE 4 — PRICING ═══════════ -->
+  <section id="pricing" aria-labelledby="pricing-heading">
+    <div class="container">
+      <div class="section-label" style="text-align:center">Pricing</div>
+      <h2 class="section-title" id="pricing-heading" style="text-align:center">
+        Transparent Engagement Models
+      </h2>
+      <div class="section-divider" style="margin:0 auto 3rem"></div>
+
+      <div class="pricing-grid">
+        <!-- Basic -->
+        <div class="pricing-card glass fade-in">
+          <div class="pricing-tier">Starter</div>
+          <div class="pricing-amount"><sup>$</sup>1,200</div>
+          <div class="pricing-period">per project · up to 4 weeks</div>
+          <ul class="pricing-features">
+            <li><i class="fa-solid fa-check"></i> Single-screen Android app</li>
+            <li><i class="fa-solid fa-check"></i> MVVM architecture setup</li>
+            <li><i class="fa-solid fa-check"></i> Firebase Auth &amp; Firestore</li>
+            <li><i class="fa-solid fa-check"></i> Play Store submission</li>
+            <li><i class="fa-solid fa-check"></i> 2 weeks post-launch support</li>
+            <li><i class="fa-solid fa-xmark" style="color:var(--surface)"></i> CI/CD pipeline</li>
+            <li><i class="fa-solid fa-xmark" style="color:var(--surface)"></i> Unit &amp; UI tests</li>
+          </ul>
+          <a href="#contact" class="btn-pricing">Get Started</a>
+        </div>
+        <!-- Pro (featured) -->
+        <div class="pricing-card glass featured fade-in" style="transition-delay:0.15s">
+          <div class="pricing-tier">Professional</div>
+          <div class="pricing-amount"><sup>$</sup>3,800</div>
+          <div class="pricing-period">per project · up to 10 weeks</div>
+          <ul class="pricing-features">
+            <li><i class="fa-solid fa-check"></i> Multi-screen production app</li>
+            <li><i class="fa-solid fa-check"></i> Clean Architecture + Hilt</li>
+            <li><i class="fa-solid fa-check"></i> REST API + Room caching</li>
+            <li><i class="fa-solid fa-check"></i> Full Firebase suite</li>
+            <li><i class="fa-solid fa-check"></i> GitHub Actions CI/CD</li>
+            <li><i class="fa-solid fa-check"></i> Unit + UI test coverage</li>
+            <li><i class="fa-solid fa-check"></i> 4 weeks post-launch support</li>
+          </ul>
+          <a href="#contact" class="btn-pricing">Most Popular</a>
+        </div>
+        <!-- Enterprise -->
+        <div class="pricing-card glass fade-in" style="transition-delay:0.3s">
+          <div class="pricing-tier">Enterprise</div>
+          <div class="pricing-amount" style="font-size:2.5rem">Custom</div>
+          <div class="pricing-period">retainer or milestone-based</div>
+          <ul class="pricing-features">
+            <li><i class="fa-solid fa-check"></i> Full-team Android architect</li>
+            <li><i class="fa-solid fa-check"></i> Security audits &amp; hardening</li>
+            <li><i class="fa-solid fa-check"></i> AI/ML feature integration</li>
+            <li><i class="fa-solid fa-check"></i> Multi-module Gradle system</li>
+            <li><i class="fa-solid fa-check"></i> Code review &amp; mentorship</li>
+            <li><i class="fa-solid fa-check"></i> Dedicated Slack channel</li>
+            <li><i class="fa-solid fa-check"></i> Ongoing SLA support</li>
+          </ul>
+          <a href="#contact" class="btn-pricing">Let's Discuss</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FAQ ═══════════ -->
+  <section id="faq" style="background:var(--surface)" aria-labelledby="faq-heading">
+    <div class="container" style="max-width:760px">
+      <div class="section-label" style="text-align:center">FAQ</div>
+      <h2 class="section-title" id="faq-heading" style="text-align:center">
+        Frequently Asked Questions
+      </h2>
+      <div class="section-divider" style="margin:0 auto 3rem"></div>
+
+      <div id="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">
+            What technologies do you specialise in?
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-a">
+            My primary stack is Kotlin with Jetpack Compose for the UI layer, MVVM/Clean Architecture for structure,
+            Hilt for dependency injection, Retrofit + OkHttp for networking, Room for local persistence, and
+            Firebase for backend services. I also work with GitHub Actions for CI/CD and ML Kit for AI features.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            How long does a typical Android project take?
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-a">
+            A single-feature MVP takes 3–5 weeks. A production-ready multi-screen app with backend integration
+            typically takes 8–12 weeks. Enterprise projects with team involvement are scoped individually.
+            I provide a detailed timeline breakdown before any engagement begins.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Do you handle Play Store submission?
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-a">
+            Yes. I handle the complete release workflow — keystore generation, ProGuard configuration, bundle
+            signing, store listing assets, and initial submission. I also set up fastlane or GitHub Actions
+            for automated future releases.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Can you work with existing codebases or teams?
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-a">
+            Absolutely. I'm experienced in joining mid-project teams, performing code audits, migrating legacy
+            Java codebases to Kotlin, and introducing modern architecture patterns incrementally without breaking
+            existing functionality.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            What is your availability and time zone?
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-a">
+            I'm based in Tachileik, Myanmar (GMT+6:30). I'm flexible and regularly coordinate with teams in
+            Europe, South Asia, and Southeast Asia. I aim to have a 4-hour overlap window with your core team hours.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Do you offer post-launch maintenance?
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-a">
+            All packages include a free support window after launch. For ongoing maintenance — SDK updates,
+            Android OS compatibility, bug fixes, and feature iterations — I offer monthly retainer agreements
+            tailored to your team's needs.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PAGE 5 — CONTACT ═══════════ -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title" id="contact-heading">Let's Build Something<br><em style="font-style:italic;color:var(--accent)">Exceptional Together.</em></h2>
+      <div class="section-divider"></div>
+
+      <div class="contact-grid">
+        <!-- Form -->
+        <div class="fade-in-left">
+          <form id="contact-form" novalidate aria-label="Contact form">
+            <div class="form-group" id="fg-name">
+              <label for="c-name">Full Name</label>
+              <input type="text" id="c-name" class="form-input" placeholder="Kyaw Zin Thant" autocomplete="name" />
+              <div class="form-error">Please enter your full name.</div>
+            </div>
+            <div class="form-group" id="fg-email">
+              <label for="c-email">Email Address</label>
+              <input type="email" id="c-email" class="form-input" placeholder="hello@example.com" autocomplete="email" />
+              <div class="form-error">Please enter a valid email address.</div>
+            </div>
+            <div class="form-group" id="fg-subject">
+              <label for="c-subject">Subject</label>
+              <input type="text" id="c-subject" class="form-input" placeholder="Android app development enquiry" />
+              <div class="form-error">Please enter a subject.</div>
+            </div>
+            <div class="form-group" id="fg-msg">
+              <label for="c-msg">Message</label>
+              <textarea id="c-msg" class="form-input" rows="5" placeholder="Tell me about your project, timeline, and goals..."></textarea>
+              <div class="form-error">Please enter your message (minimum 20 characters).</div>
+            </div>
+            <button type="submit" class="btn-submit">
+              <i class="fa-solid fa-paper-plane"></i> &nbsp;Send Message
+            </button>
+            <div id="form-success" style="display:none;margin-top:1rem;text-align:center;color:var(--accent);font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:0.1em">
+              ✓ MESSAGE SENT — I'll reply within 24 hours.
+            </div>
+          </form>
+        </div>
+
+        <!-- Contact Info + Map -->
+        <div class="fade-in-right" style="transition-delay:0.15s">
+          <div class="contact-info-item">
+            <i class="fa-solid fa-envelope"></i>
+            <div>
+              <h4>Email</h4>
+              <a href="mailto:moekyawaung@fastmail.com">moekyawaung@fastmail.com</a>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+              <h4>Phone</h4>
+              <a href="tel:+959666000050">+95 9 666 000 050</a>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>
+              <h4>Location</h4>
+              <p>Tachileik, Shan State, Myanmar</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <i class="fa-brands fa-github"></i>
+            <div>
+              <h4>GitHub</h4>
+              <a href="https://github.com/Dev-moe-kyawaung/" target="_blank" rel="noopener noreferrer">Dev-moe-kyawaung</a>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <i class="fa-brands fa-linkedin"></i>
+            <div>
+              <h4>LinkedIn</h4>
+              <a href="https://www.linkedin.com/in/moe-kyaw-aung-2653093a1" target="_blank" rel="noopener noreferrer">moe-kyaw-aung</a>
+            </div>
+          </div>
+
+          <!-- Map embed (Tachileik, Myanmar) -->
+          <div class="footer-map" style="margin-top:1.5rem">
+            <iframe
+              src="https://www.openstreetmap.org/export/embed.html?bbox=99.86,20.42,99.92,20.46&layer=mapnik&marker=20.44,99.89"
+              width="100%" height="220" style="border:0;border-radius:12px"
+              allowfullscreen="" loading="lazy"
+              title="Tachileik, Myanmar location map"
+              aria-label="Map showing Tachileik, Myanmar"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand col -->
+        <div class="footer-brand">
+          <div class="nav-logo" style="font-size:1.5rem">MKA<span style="color:var(--accent)">.</span></div>
+          <p>Senior Android Developer at Microsoft. Building secure, scalable, and user-friendly mobile applications since 2013.</p>
+          <div style="margin-top:1.25rem;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--khaki)">မိုးကျော်အောင် · Tachileik, Myanmar</div>
+          <div class="social-icons">
+            <a href="https://github.com/Dev-moe-kyawaung/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/moe-kyaw-aung-2653093a1" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://bsky.app/profile/moekyawaung96.bsky.social" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Bluesky"><i class="fa-solid fa-cloud"></i></a>
+            <a href="https://tiktok.com/@moelay262411" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/channel/UCdGC3lLlIPnb2VIL_qS65OQ" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.tumblr.com/moekyawaung" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Tumblr"><i class="fa-brands fa-tumblr"></i></a>
+            <a href="https://www.pinterest.com/moekyawaung13721" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+            <a href="https://www.reddit.com/user/Mobile-Chemistry4675" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+          </div>
+        </div>
+        <!-- Quick links -->
+        <div>
+          <div class="footer-heading">Navigation</div>
+          <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <!-- Tech stack -->
+        <div>
+          <div class="footer-heading">Tech Stack</div>
+          <ul>
+            <li><a href="#">Kotlin / Java</a></li>
+            <li><a href="#">Jetpack Compose</a></li>
+            <li><a href="#">Firebase</a></li>
+            <li><a href="#">Room DB</a></li>
+            <li><a href="#">Retrofit / OkHttp</a></li>
+            <li><a href="#">GitHub Actions</a></li>
+            <li><a href="#">ML Kit / TFLite</a></li>
+          </ul>
+        </div>
+        <!-- Newsletter -->
+        <div>
+          <div class="footer-heading">Newsletter</div>
+          <p style="font-size:0.85rem;color:var(--khaki);line-height:1.65;margin-bottom:0.5rem">
+            Android tips, architecture patterns, and project updates — direct to your inbox.
+          </p>
+          <form id="newsletter-form" novalidate aria-label="Newsletter signup">
+            <div class="newsletter-form">
+              <input type="email" class="newsletter-input" placeholder="your@email.com" id="nl-email" aria-label="Email for newsletter" />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe">Go</button>
+            </div>
+            <div id="nl-success" style="display:none;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--accent);margin-top:0.5rem;letter-spacing:0.1em">
+              ✓ SUBSCRIBED
+            </div>
+          </form>
+          <div style="margin-top:2rem">
+            <div class="footer-heading">Certifications</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.5rem">
+              <span class="chip" style="font-size:0.65rem">Android</span>
+              <span class="chip" style="font-size:0.65rem">Kotlin</span>
+              <span class="chip" style="font-size:0.65rem">Firebase</span>
+              <span class="chip" style="font-size:0.65rem">Cyber Security</span>
+              <span class="chip" style="font-size:0.65rem">Ethical Hacking</span>
+              <span class="chip" style="font-size:0.65rem">AI / ML</span>
+              <span class="chip" style="font-size:0.65rem">DevOps</span>
+              <span class="chip" style="font-size:0.65rem">AWS Cloud</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer bottom -->
+      <div class="footer-bottom">
+        <p>© 2025 Moe Kyaw Aung · <span class="burmese">မိုးကျော်အောင်</span> · All rights reserved.</p>
+        <p>Designed &amp; built with ♥ in Tachileik, Myanmar · Portfolio V8</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════ BACK TO TOP ═══════════ -->
+  <button id="back-top" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <!-- ═══════════ STICKY CTA ═══════════ -->
+  <div id="sticky-cta" role="complementary" aria-label="Sticky call to action">
+    <i class="fa-solid fa-circle-dot" style="font-size:0.6rem"></i>
+    <a href="#contact">Hire Me</a>
+    <span style="color:var(--glass-border)">·</span>
+    <a href="https://github.com/Dev-moe-kyawaung/" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
+
+  <!-- ═══════════ JAVASCRIPT ═══════════ -->
+  <script>
+  (() => {
+    'use strict';
+
+    /* ── Preloader ─────────────────────────────────── */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('preloader').classList.add('hidden');
+      }, 2400);
+    });
+
+    /* ── Custom Cursor ─────────────────────────────── */
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left  = mx + 'px';
+      dot.style.top   = my + 'px';
+    });
+
+    // Smooth ring follow
+    (function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animRing);
+    })();
+
+    // Expand ring on interactive elements
+    document.querySelectorAll('a, button, .gallery-item, .faq-q, .slider-dot').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        ring.style.width  = '58px';
+        ring.style.height = '58px';
+        ring.style.borderColor = 'var(--sand)';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.style.width  = '36px';
+        ring.style.height = '36px';
+        ring.style.borderColor = 'var(--accent)';
+      });
+    });
+
+    /* ── Particle Canvas Hero ──────────────────────── */
+    const canvas = document.getElementById('particle-canvas');
+    const ctx    = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Particle class
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x  = Math.random() * W;
+        this.y  = Math.random() * H;
+        this.r  = Math.random() * 1.5 + 0.4;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.a  = Math.random() * 0.5 + 0.1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(148,137,121,${this.a})`;
+        ctx.fill();
+      }
+    }
+
+    // Create 120 particles
+    for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+    // Mouse parallax for hero
+    let mouseX = W / 2, mouseY = H / 2;
+    document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+
+    function drawConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(148,137,121,${0.12 * (1 - dist/120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+      // Draw subtle grid
+      ctx.strokeStyle = 'rgba(57,62,70,0.3)';
+      ctx.lineWidth = 0.5;
+      for (let x = 0; x < W; x += 60) {
+        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+      }
+      for (let y = 0; y < H; y += 60) {
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+      }
+      particles.forEach(p => { p.update(); p.draw(); });
+      drawConnections();
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    /* ── Navbar scroll ─────────────────────────────── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+      // Back to top
+      document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
+      // Sticky CTA
+      document.getElementById('sticky-cta').classList.toggle('visible', window.scrollY > 600);
+    });
+
+    /* ── Back to top ───────────────────────────────── */
+    document.getElementById('back-top').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* ── Dark / Light mode ─────────────────────────── */
+    const themeBtn  = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const html      = document.documentElement;
+
+    themeBtn.addEventListener('click', () => {
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      themeIcon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    });
+
+    /* ── Hamburger mobile menu ─────────────────────── */
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
+
+    /* ── Scroll-triggered fade-in ──────────────────── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          // Trigger skill bars
+          e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+          // Trigger counters
+          e.target.querySelectorAll('.counter').forEach(counter => {
+            animCounter(counter);
+          });
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => observer.observe(el));
+
+    // Also observe stat cards for counters
+    document.querySelectorAll('.stat-card').forEach(el => observer.observe(el));
+
+    /* ── Animated counter ──────────────────────────── */
+    function animCounter(el) {
+      if (el.dataset.done) return;
+      el.dataset.done = true;
+      const target   = parseInt(el.dataset.target);
+      const duration = 1800;
+      const start    = performance.now();
+
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased    = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        const value    = Math.floor(eased * target);
+        // Format large numbers
+        el.textContent = target >= 1000000
+          ? (value / 1000000).toFixed(1) + 'M'
+          : value.toLocaleString();
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    /* ── Parallax ──────────────────────────────────── */
+    window.addEventListener('scroll', () => {
+      const sy = window.scrollY;
+      const heroContent = document.querySelector('.hero-content');
+      if (heroContent) heroContent.style.transform = `translateY(${sy * 0.25}px)`;
+    });
+
+    /* ── Image Lightbox ────────────────────────────── */
+    const lightbox    = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lbClose     = document.getElementById('lightbox-close');
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        lightboxImg.src = item.dataset.img;
+        lightboxImg.alt = item.dataset.title || '';
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    lbClose.addEventListener('click', () => {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+
+    /* ── Testimonial Slider ────────────────────────── */
+    let currentSlide = 0;
+    const track  = document.getElementById('testimonial-track');
+    const dots   = document.querySelectorAll('.slider-dot');
+    const total  = document.querySelectorAll('.testimonial-card').length;
+
+    function goToSlide(idx) {
+      currentSlide = idx;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+
+    dots.forEach(d => d.addEventListener('click', () => goToSlide(+d.dataset.index)));
+
+    // Auto-advance every 5 s
+    setInterval(() => goToSlide((currentSlide + 1) % total), 5000);
+
+    /* ── FAQ Accordion ─────────────────────────────── */
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-q').addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    /* ── Contact Form Validation ───────────────────── */
+    document.getElementById('contact-form').addEventListener('submit', e => {
+      e.preventDefault();
+      let valid = true;
+
+      function validate(inputId, groupId, check) {
+        const el  = document.getElementById(inputId);
+        const grp = document.getElementById(groupId);
+        if (!check(el.value.trim())) {
+          grp.classList.add('invalid'); valid = false;
+        } else {
+          grp.classList.remove('invalid');
+        }
+        el.addEventListener('input', () => {
+          if (check(el.value.trim())) grp.classList.remove('invalid');
+        });
+      }
+
+      validate('c-name',    'fg-name',    v => v.length >= 2);
+      validate('c-email',   'fg-email',   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+      validate('c-subject', 'fg-subject', v => v.length >= 3);
+      validate('c-msg',     'fg-msg',     v => v.length >= 20);
+
+      if (valid) {
+        document.getElementById('form-success').style.display = 'block';
+        e.target.reset();
+        setTimeout(() => {
+          document.getElementById('form-success').style.display = 'none';
+        }, 5000);
+      }
+    });
+
+    /* ── Newsletter form ───────────────────────────── */
+    document.getElementById('newsletter-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const em = document.getElementById('nl-email');
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())) {
+        document.getElementById('nl-success').style.display = 'block';
+        em.value = '';
+      }
+    });
+
+    /* ── Skill bar observer (separate pass for visible cards) ─── */
+    document.querySelectorAll('.skill-card').forEach(card => {
+      const io = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          card.querySelectorAll('.skill-bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+          io.disconnect();
+        }
+      }, { threshold: 0.3 });
+      io.observe(card);
+    });
+
+  })();
+  </script>
+</body>
+</html>
