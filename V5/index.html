@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Moe Kyaw Aung — Senior Android Developer. Royal Velvet Gold Portfolio."/>
+<title>MKA · ROYAL VELVET</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@200;300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --velvet:#0e0812;
+  --deep:#150d1b;
+  --purple:#1d1128;
+  --grape:#2d1b42;
+  --gold1:#c9941a;
+  --gold2:#e8b84b;
+  --gold3:#f5d98a;
+  --gold-shine:linear-gradient(135deg,#a07014 0%,#c9941a 25%,#f5d98a 50%,#c9941a 75%,#a07014 100%);
+  --cream:#f0e6ce;
+  --mist:rgba(240,230,206,0.65);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--velvet);
+  color:var(--cream);
+  font-family:'Montserrat',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* VELVET NOISE */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 20% 20%,rgba(45,27,66,0.6) 0%,transparent 60%),
+    radial-gradient(ellipse at 80% 80%,rgba(29,17,40,0.8) 0%,transparent 60%),
+    repeating-linear-gradient(45deg,transparent 0,transparent 2px,rgba(201,148,26,0.015) 2px,rgba(201,148,26,0.015) 4px);
+}
+
+/* CURSOR */
+#cur{
+  position:fixed;width:8px;height:8px;border-radius:50%;
+  background:var(--gold2);box-shadow:0 0 12px var(--gold2),0 0 24px rgba(201,148,26,0.5);
+  pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
+}
+#cur2{
+  position:fixed;width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(201,148,26,0.35);
+  pointer-events:none;z-index:9998;transform:translate(-50%,-50%);
+  transition:transform .1s ease;
+}
+
+/* GOLD BORDER TOP */
+.gold-bar{
+  height:3px;
+  background:var(--gold-shine);
+  background-size:300% 100%;
+  animation:goldShimmer 4s ease infinite;
+}
+@keyframes goldShimmer{0%{background-position:0% 0%}50%{background-position:100% 0%}100%{background-position:0% 0%}}
+
+/* NAV */
+nav{
+  position:fixed;top:3px;left:0;right:0;z-index:1000;
+  padding:1.25rem 4rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(14,8,18,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(201,148,26,0.15);
+}
+.nav-crest{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:700;
+  text-decoration:none;letter-spacing:0.1em;
+  background:var(--gold-shine);background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:goldShimmer 4s ease infinite;
+}
+.nav-links{list-style:none;display:flex;gap:2.5rem}
+.nav-links a{
+  font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;font-weight:300;
+  color:rgba(240,230,206,0.45);text-decoration:none;
+  transition:color .3s;
+}
+.nav-links a:hover{color:var(--gold2)}
+.nav-hire{
+  font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;font-weight:300;
+  padding:0.7rem 1.75rem;text-decoration:none;
+  border:1px solid var(--gold1);
+  color:var(--gold2);
+  transition:background .3s;
+  position:relative;overflow:hidden;
+}
+.nav-hire::before{
+  content:'';position:absolute;inset:0;
+  background:var(--gold-shine);background-size:300% 100%;
+  animation:goldShimmer 4s ease infinite;
+  opacity:0;transition:opacity .3s;
+}
+.nav-hire:hover::before{opacity:1}
+.nav-hire:hover{color:var(--velvet)}
+.nav-hire span{position:relative;z-index:1}
+
+/* HERO */
+#hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:6rem 2rem 4rem;
+  overflow:hidden;
+}
+/* Radial glow */
+#hero::before{
+  content:'';position:absolute;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,148,26,0.06) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+.hero-ornament{
+  font-size:0.65rem;letter-spacing:0.55em;text-transform:uppercase;
+  color:var(--gold1);margin-bottom:2rem;
+  display:flex;align-items:center;justify-content:center;gap:1.5rem;
+}
+.ornament-line{
+  flex:1;max-width:80px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold1));
+}
+.ornament-line:last-child{background:linear-gradient(270deg,transparent,var(--gold1))}
+.ornament-diamond{
+  font-size:0.8rem;color:var(--gold2);
+}
+/* Profile */
+.royal-avatar{
+  position:relative;width:180px;height:180px;margin:0 auto 3rem;
+}
+.ra-outer{
+  position:absolute;inset:-18px;
+  border-radius:50%;
+  border:1px solid rgba(201,148,26,0.3);
+  animation:rotateSlow 20s linear infinite;
+}
+.ra-outer::before,.ra-outer::after{
+  content:'◆';position:absolute;
+  font-size:0.7rem;color:var(--gold1);
+}
+.ra-outer::before{top:-6px;left:50%;transform:translateX(-50%)}
+.ra-outer::after{bottom:-6px;left:50%;transform:translateX(-50%)}
+@keyframes rotateSlow{to{transform:rotate(360deg)}}
+.ra-mid{
+  position:absolute;inset:-8px;border-radius:50%;
+  border:1px solid rgba(201,148,26,0.15);
+}
+.ra-img{
+  position:absolute;inset:0;border-radius:50%;overflow:hidden;
+  border:2px solid var(--gold1);
+  box-shadow:0 0 30px rgba(201,148,26,0.25),0 0 80px rgba(201,148,26,0.08);
+}
+.ra-img img{width:100%;height:100%;object-fit:cover;filter:sepia(10%)contrast(1.05)}
+.hero-title-small{
+  font-family:'Montserrat',sans-serif;
+  font-size:0.62rem;letter-spacing:0.55em;text-transform:uppercase;
+  color:rgba(240,230,206,0.45);margin-bottom:0.75rem;
+  font-weight:300;
+}
+.hero-name{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3.5rem,8vw,7rem);
+  font-weight:900;line-height:0.95;
+  background:var(--gold-shine);background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:goldShimmer 5s ease infinite;
+  margin-bottom:0.75rem;
+}
+.hero-name-sub{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(1.5rem,4vw,3rem);
+  color:rgba(240,230,206,0.35);font-weight:400;
+  margin-bottom:1.5rem;
+}
+.hero-role{
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:1.1rem;color:var(--gold3);letter-spacing:0.05em;
+  margin-bottom:0.75rem;
+}
+.hero-mm{
+  font-size:0.75rem;letter-spacing:0.2em;
+  color:rgba(240,230,206,0.35);font-weight:300;margin-bottom:3rem;
+}
+.hero-btns{display:flex;gap:1.25rem;justify-content:center;flex-wrap:wrap}
+.btn-royal{
+  font-size:0.62rem;letter-spacing:0.35em;text-transform:uppercase;font-weight:300;
+  padding:1rem 2.5rem;text-decoration:none;
+  background:var(--gold-shine);background-size:300% 100%;
+  animation:goldShimmer 5s ease infinite;
+  color:var(--velvet);
+  transition:transform .3s,box-shadow .3s;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
+.btn-royal:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(201,148,26,0.3)}
+.btn-royal-ghost{
+  font-size:0.62rem;letter-spacing:0.35em;text-transform:uppercase;font-weight:300;
+  padding:1rem 2.5rem;text-decoration:none;
+  border:1px solid rgba(201,148,26,0.4);color:var(--gold2);
+  transition:border-color .3s,background .3s;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
+.btn-royal-ghost:hover{border-color:var(--gold2);background:rgba(201,148,26,0.05)}
+
+/* STATS */
+.royal-stats{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid rgba(201,148,26,0.15);
+  border-bottom:1px solid rgba(201,148,26,0.15);
+}
+.rs-item{
+  text-align:center;padding:3rem 2rem;
+  border-right:1px solid rgba(201,148,26,0.1);
+  position:relative;overflow:hidden;
+}
+.rs-item::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold1),transparent);
+  transform:scaleX(0);transition:transform .5s;
+}
+.rs-item:hover::before{transform:scaleX(1)}
+.rs-item:last-child{border-right:none}
+.rs-n{
+  font-family:'Playfair Display',serif;font-weight:900;
+  font-size:3.5rem;line-height:1;
+  background:var(--gold-shine);background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:goldShimmer 5s ease infinite;
+}
+.rs-l{
+  font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;
+  color:rgba(240,230,206,0.35);margin-top:0.4rem;font-weight:300;
+}
+
+/* ABOUT */
+#about{
+  position:relative;z-index:1;padding:6rem 4rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;
+}
+.about-img-frame{position:relative}
+.about-img-frame::before{
+  content:'';position:absolute;
+  top:-16px;left:-16px;right:16px;bottom:16px;
+  border:1px solid rgba(201,148,26,0.2);
+  pointer-events:none;
+}
+.about-img-frame::after{
+  content:'◆';position:absolute;
+  top:-22px;left:-22px;
+  color:var(--gold1);font-size:0.8rem;
+}
+.about-img{
+  width:100%;aspect-ratio:3/4;object-fit:cover;
+  filter:sepia(20%)contrast(1.05);
+  border:2px solid rgba(201,148,26,0.2);
+}
+.about-badge{
+  position:absolute;bottom:-20px;right:-20px;
+  padding:1.5rem 2rem;
+  background:var(--grape);
+  border:1px solid rgba(201,148,26,0.3);
+  text-align:center;
+}
+.ab-n{
+  font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;
+  background:var(--gold-shine);background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:goldShimmer 5s ease infinite;
+  line-height:1;
+}
+.ab-l{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--mist);font-weight:300}
+.about-eyebrow{
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:1.1rem;color:var(--gold2);margin-bottom:1.25rem;
+}
+.about-h{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,4vw,3.2rem);font-weight:700;
+  color:var(--cream);line-height:1.1;margin-bottom:2rem;
+}
+.about-h em{
+  font-style:italic;
+  background:var(--gold-shine);background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:goldShimmer 5s ease infinite;
+}
+.about-p{font-size:0.87rem;line-height:2.1;color:var(--mist);font-weight:300;margin-bottom:1.25rem}
+.skills-pills{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.5rem}
+.pill{
+  font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:300;
+  padding:0.4rem 1rem;
+  border:1px solid rgba(201,148,26,0.25);
+  color:rgba(240,230,206,0.6);
+  transition:border-color .3s,color .3s;
+}
+.pill:hover{border-color:var(--gold1);color:var(--gold2)}
+
+/* SKILLS CARDS */
+#skills{position:relative;z-index:1;padding:6rem 4rem;background:var(--deep)}
+.gold-divider{
+  display:flex;align-items:center;gap:1.5rem;margin-bottom:3.5rem;
+}
+.gd-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,148,26,0.3),transparent)}
+.gd-line:first-child{background:linear-gradient(270deg,rgba(201,148,26,0.3),transparent)}
+.gd-text{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:1.2rem;color:var(--gold1);white-space:nowrap;
+  letter-spacing:0.08em;
+}
+.skills-royal-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+}
+.src-card{
+  padding:2.5rem 2rem;
+  background:var(--purple);
+  border:1px solid rgba(201,148,26,0.1);
+  position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s;
+}
+.src-card:hover{border-color:rgba(201,148,26,0.35);transform:translateY(-4px)}
+.src-card::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:2px;
+  background:var(--gold-shine);background-size:300% 100%;
+  animation:goldShimmer 4s ease infinite;
+  transform:scaleX(0);transition:transform .4s;
+}
+.src-card:hover::after{transform:scaleX(1)}
+.src-roman{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:3rem;font-weight:700;line-height:1;
+  color:rgba(201,148,26,0.1);margin-bottom:1rem;
+}
+.src-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;color:var(--cream);margin-bottom:0.6rem;
+}
+.src-desc{
+  font-size:0.78rem;line-height:1.85;color:var(--mist);
+  font-weight:300;margin-bottom:1.25rem;
+}
+.src-bar{height:1px;background:rgba(201,148,26,0.15);margin-bottom:0.4rem;position:relative}
+.src-fill{
+  position:absolute;top:0;left:0;height:100%;width:0;
+  background:var(--gold-shine);background-size:300% 100%;
+  animation:goldShimmer 4s ease infinite;
+  transition:width 1.5s ease;
+}
+.src-pct{font-size:0.65rem;color:var(--gold1);letter-spacing:0.15em;font-weight:300}
+
+/* WORKS */
+#work{position:relative;z-index:1;padding:6rem 4rem}
+.works-royal{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.wr-item{
+  background:var(--purple);
+  border:1px solid rgba(201,148,26,0.1);
+  overflow:hidden;
+  transition:border-color .3s,transform .3s;
+}
+.wr-item:hover{border-color:rgba(201,148,26,0.3);transform:translateY(-3px)}
+.wr-img{
+  width:100%;aspect-ratio:16/9;object-fit:cover;
+  filter:sepia(20%)contrast(1.05)brightness(0.85);
+  transition:filter .4s;
+}
+.wr-item:hover .wr-img{filter:sepia(10%)}
+.wr-body{padding:2rem}
+.wr-num{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:2rem;color:rgba(201,148,26,0.2);
+  line-height:1;margin-bottom:0.5rem;
+}
+.wr-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;color:var(--cream);margin-bottom:0.5rem;
+}
+.wr-desc{font-size:0.78rem;line-height:1.8;color:var(--mist);font-weight:300;margin-bottom:1rem}
+.wr-tags{display:flex;flex-wrap:wrap;gap:0.4rem}
+.wr-tag{
+  font-size:0.58rem;letter-spacing:0.2em;font-weight:300;
+  padding:0.25rem 0.7rem;
+  border:1px solid rgba(201,148,26,0.2);color:rgba(240,230,206,0.55);
+}
+
+/* CONTACT */
+#contact{
+  position:relative;z-index:1;padding:6rem 4rem;
+  background:var(--deep);
+  display:grid;grid-template-columns:1fr 1fr;gap:6rem;
+}
+.contact-royal h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;
+  color:var(--cream);line-height:1.05;margin-bottom:1rem;
+}
+.contact-royal h2 em{
+  font-style:italic;
+  background:var(--gold-shine);background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:goldShimmer 5s ease infinite;
+}
+.contact-royal p{font-size:0.87rem;line-height:2;color:var(--mist);font-weight:300;margin-bottom:2.5rem}
+.cr-info{display:flex;flex-direction:column;gap:1.25rem}
+.cri{
+  display:flex;align-items:flex-start;gap:1.25rem;
+  padding:1rem 1.25rem;
+  border:1px solid rgba(201,148,26,0.08);
+  transition:border-color .3s;
+}
+.cri:hover{border-color:rgba(201,148,26,0.25)}
+.cri-k{
+  font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--gold1);min-width:70px;padding-top:0.2rem;font-weight:300;
+}
+.cri-v{font-size:0.85rem;color:var(--cream);font-weight:300}
+.cri-v a{color:var(--gold2);text-decoration:none}
+.cri-v a:hover{text-decoration:underline}
+.royal-form{display:flex;flex-direction:column;gap:1.5rem}
+.rf-group{}
+.rf-label{
+  font-size:0.58rem;letter-spacing:0.35em;text-transform:uppercase;
+  color:var(--gold1);display:block;margin-bottom:0.6rem;font-weight:300;
+}
+.rf-input{
+  width:100%;background:rgba(14,8,18,0.6);
+  border:1px solid rgba(201,148,26,0.15);
+  color:var(--cream);
+  font-family:'Montserrat',sans-serif;font-size:0.85rem;font-weight:300;
+  padding:0.85rem 1rem;outline:none;
+  transition:border-color .3s;
+}
+.rf-input:focus{border-color:var(--gold1)}
+.rf-input::placeholder{color:rgba(240,230,206,0.2)}
+
+/* FOOTER */
+footer{
+  position:relative;z-index:1;
+  padding:2.5rem 4rem;
+  background:var(--velvet);
+  border-top:1px solid rgba(201,148,26,0.15);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+.footer-crest{
+  font-family:'Playfair Display',serif;font-weight:700;
+  font-size:1.3rem;letter-spacing:0.1em;
+  background:var(--gold-shine);background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:goldShimmer 5s ease infinite;
+}
+.footer-info{font-size:0.6rem;letter-spacing:0.2em;font-weight:300;color:rgba(240,230,206,0.25)}
+.footer-soc{display:flex;gap:1rem}
+.footer-soc a{
+  font-size:0.6rem;letter-spacing:0.2em;font-weight:300;
+  color:rgba(201,148,26,0.5);text-decoration:none;
+  padding:0.4rem 0.9rem;
+  border:1px solid rgba(201,148,26,0.15);
+  transition:all .3s;
+}
+.footer-soc a:hover{color:var(--gold2);border-color:var(--gold1)}
+
+/* BACK TOP */
+#btt{
+  position:fixed;bottom:2rem;right:2rem;z-index:900;
+  width:44px;height:44px;
+  background:var(--gold-shine);background-size:300% 100%;
+  animation:goldShimmer 5s ease infinite;
+  border:none;color:var(--velvet);cursor:none;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+#btt.show{opacity:1;transform:translateY(0)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+@media(max-width:1000px){
+  nav{padding:1rem 2rem}.nav-links{display:none}
+  #about,#contact{grid-template-columns:1fr;padding:4rem 2rem;gap:3rem}
+  .about-img-frame{display:none}
+  #skills{padding:4rem 2rem}.skills-royal-grid{grid-template-columns:1fr 1fr}
+  #work{padding:4rem 2rem}.works-royal{grid-template-columns:1fr}
+  .royal-stats{grid-template-columns:1fr 1fr}
+  .rs-item{border-bottom:1px solid rgba(201,148,26,0.08)}
+  footer{padding:2rem}
+}
+@media(max-width:600px){
+  .skills-royal-grid{grid-template-columns:1fr}
+  .hero-name{font-size:3rem}.royal-stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="gold-bar"></div>
+<div id="cur"></div><div id="cur2"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-crest">MKA</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Expertise</a></li>
+    <li><a href="#work">Portfolio</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-hire"><span>Hire Me</span></a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div>
+    <div class="hero-ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond">◆</div>
+      <span>Senior Android Developer · Microsoft</span>
+      <div class="ornament-diamond">◆</div>
+      <div class="ornament-line"></div>
+    </div>
+    <div class="royal-avatar">
+      <div class="ra-outer"></div>
+      <div class="ra-mid"></div>
+      <div class="ra-img">
+        <img src="https://0.gravatar.com/avatar/a2dae9a29fbf7c72552047efc744be54a018938aacd9009e7500f93d72eb0f2e?size=360" alt="Moe Kyaw Aung"/>
+      </div>
+    </div>
+    <div class="hero-title-small">Portfolio V8 · Royal Collection</div>
+    <h1 class="hero-name">MOE KYAW AUNG</h1>
+    <div class="hero-name-sub">မိုးကျော်အောင်</div>
+    <p class="hero-role">Senior Android Developer · Kotlin Architect · Security Expert</p>
+    <p class="hero-mm">Microsoft · Tachileik, Myanmar 🇲🇲 · 12 Years Experience</p>
+    <div class="hero-btns">
+      <a href="#work" class="btn-royal">View Portfolio</a>
+      <a href="#contact" class="btn-royal-ghost">Request Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="royal-stats">
+  <div class="rs-item reveal"><div class="rs-n">12+</div><div class="rs-l">Years Experience</div></div>
+  <div class="rs-item reveal"><div class="rs-n">48+</div><div class="rs-l">Apps Shipped</div></div>
+  <div class="rs-item reveal"><div class="rs-n">35+</div><div class="rs-l">Certifications</div></div>
+  <div class="rs-item reveal"><div class="rs-n">1.2M+</div><div class="rs-l">Total Downloads</div></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img-frame reveal">
+    <img src="https://0.gravatar.com/avatar/a2dae9a29fbf7c72552047efc744be54a018938aacd9009e7500f93d72eb0f2e?size=600" class="about-img" alt="Moe Kyaw Aung"/>
+    <div class="about-badge">
+      <div class="ab-n">V8</div>
+      <div class="ab-l">Royal Edition</div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="about-eyebrow">◆ About the Developer ◆</div>
+    <h2 class="about-h">Crafting <em>Excellence</em><br>in Every Build</h2>
+    <p class="about-p">I'm a Senior Android Developer at Microsoft, based in Tachileik, Myanmar. With nearly 12 years of crafting mobile applications, I bring a commitment to excellence that spans from architectural decisions to pixel-perfect UI implementation.</p>
+    <p class="about-p">My expertise encompasses the full Android ecosystem — from writing clean, testable Kotlin to deploying production apps at scale. I treat every codebase as a long-term investment, not a short-term delivery.</p>
+    <div class="skills-pills">
+      <span class="pill">Kotlin</span><span class="pill">Jetpack Compose</span><span class="pill">MVVM</span>
+      <span class="pill">Clean Architecture</span><span class="pill">Firebase</span><span class="pill">Hilt / Dagger</span>
+      <span class="pill">Room DB</span><span class="pill">Retrofit</span><span class="pill">GitHub Actions</span>
+      <span class="pill">Ethical Hacking</span><span class="pill">ML Kit</span><span class="pill">Claude API</span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="gold-divider reveal">
+    <div class="gd-line"></div>
+    <div class="gd-text">Core Expertise</div>
+    <div class="gd-line"></div>
+  </div>
+  <div class="skills-royal-grid">
+    <div class="src-card reveal">
+      <div class="src-roman">I</div>
+      <div class="src-title">Android Development</div>
+      <div class="src-desc">Kotlin, Jetpack Compose, Material 3, full-lifecycle app development with modern patterns.</div>
+      <div class="src-bar"><div class="src-fill" data-w="98"></div></div>
+      <div class="src-pct">98% Proficiency</div>
+    </div>
+    <div class="src-card reveal">
+      <div class="src-roman">II</div>
+      <div class="src-title">Architecture Design</div>
+      <div class="src-desc">MVVM, Clean Architecture, Hilt, multi-module Gradle. Systems built to endure and scale.</div>
+      <div class="src-bar"><div class="src-fill" data-w="96"></div></div>
+      <div class="src-pct">96% Proficiency</div>
+    </div>
+    <div class="src-card reveal">
+      <div class="src-roman">III</div>
+      <div class="src-title">Firebase & Backends</div>
+      <div class="src-desc">Firestore, Functions, Auth, Analytics, Crashlytics. REST APIs, Retrofit, OkHttp.</div>
+      <div class="src-bar"><div class="src-fill" data-w="94"></div></div>
+      <div class="src-pct">94% Proficiency</div>
+    </div>
+    <div class="src-card reveal">
+      <div class="src-roman">IV</div>
+      <div class="src-title">Security Engineering</div>
+      <div class="src-desc">Certificate pinning, ProGuard, ethical hacking, penetration testing, encryption strategies.</div>
+      <div class="src-bar"><div class="src-fill" data-w="88"></div></div>
+      <div class="src-pct">88% Proficiency</div>
+    </div>
+    <div class="src-card reveal">
+      <div class="src-roman">V</div>
+      <div class="src-title">CI/CD Automation</div>
+      <div class="src-desc">GitHub Actions 5-workflow suite: lint, tests, signing, release builds. Full automation.</div>
+      <div class="src-bar"><div class="src-fill" data-w="92"></div></div>
+      <div class="src-pct">92% Proficiency</div>
+    </div>
+    <div class="src-card reveal">
+      <div class="src-roman">VI</div>
+      <div class="src-title">AI / ML Integration</div>
+      <div class="src-desc">TFLite, ML Kit, Claude API, Gemini. On-device inference and intelligent app features.</div>
+      <div class="src-bar"><div class="src-fill" data-w="85"></div></div>
+      <div class="src-pct">85% Proficiency</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="gold-divider reveal">
+    <div class="gd-line"></div>
+    <div class="gd-text">Selected Portfolio</div>
+    <div class="gd-line"></div>
+  </div>
+  <div class="works-royal">
+    <div class="wr-item reveal">
+      <img src="https://picsum.photos/seed/royal1/800/450" class="wr-img" alt="MoekyawTranslator"/>
+      <div class="wr-body">
+        <div class="wr-num">I.</div>
+        <div class="wr-title">MoekyawTranslator</div>
+        <div class="wr-desc">Flagship multilingual Android app powered by Claude API. 8 languages including Myanmar, offline TTS, Firebase sync.</div>
+        <div class="wr-tags"><span class="wr-tag">Kotlin</span><span class="wr-tag">Claude API</span><span class="wr-tag">Firebase</span></div>
+      </div>
+    </div>
+    <div class="wr-item reveal">
+      <img src="https://picsum.photos/seed/royal2/800/450" class="wr-img" alt="PulseSync Azure"/>
+      <div class="wr-body">
+        <div class="wr-num">II.</div>
+        <div class="wr-title">PulseSync Azure</div>
+        <div class="wr-desc">Enterprise app with MSAL, Microsoft Graph, Azure OpenAI, Cosmos DB, and SignalR real-time messaging.</div>
+        <div class="wr-tags"><span class="wr-tag">Azure</span><span class="wr-tag">MSAL</span><span class="wr-tag">OpenAI</span></div>
+      </div>
+    </div>
+    <div class="wr-item reveal">
+      <img src="https://picsum.photos/seed/royal3/800/450" class="wr-img" alt="CI/CD Suite"/>
+      <div class="wr-body">
+        <div class="wr-num">III.</div>
+        <div class="wr-title">Android CI/CD Suite</div>
+        <div class="wr-desc">5-workflow GitHub Actions system: automated lint, tests, signing, release. Cuts deploy time by 80%.</div>
+        <div class="wr-tags"><span class="wr-tag">GitHub Actions</span><span class="wr-tag">Fastlane</span><span class="wr-tag">DevOps</span></div>
+      </div>
+    </div>
+    <div class="wr-item reveal">
+      <img src="https://picsum.photos/seed/royal4/800/450" class="wr-img" alt="Compose System"/>
+      <div class="wr-body">
+        <div class="wr-num">IV.</div>
+        <div class="wr-title">Compose Design System</div>
+        <div class="wr-desc">100+ reusable Jetpack Compose components with Material 3, dark/light theming, accessibility tokens.</div>
+        <div class="wr-tags"><span class="wr-tag">Compose</span><span class="wr-tag">Material 3</span><span class="wr-tag">Open Source</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-royal reveal">
+    <h2>Begin Your<br><em>Project Today</em></h2>
+    <p>Available for Android development engagements, architecture consulting, security reviews, and AI/ML integrations. Microsoft-grade quality for your next mobile application.</p>
+    <div class="cr-info">
+      <div class="cri"><div class="cri-k">Email</div><div class="cri-v"><a href="mailto:moekyawaung@fastmail.com">moekyawaung@fastmail.com</a></div></div>
+      <div class="cri"><div class="cri-k">GitHub</div><div class="cri-v"><a href="https://github.com/Dev-moe-kyawaung" target="_blank">Dev-moe-kyawaung</a></div></div>
+      <div class="cri"><div class="cri-k">Location</div><div class="cri-v">Tachileik, Myanmar 🇲🇲</div></div>
+      <div class="cri"><div class="cri-k">LinkedIn</div><div class="cri-v"><a href="https://www.linkedin.com/in/moe-kyaw-aung-2653093a1" target="_blank">moe-kyaw-aung</a></div></div>
+    </div>
+  </div>
+  <form class="royal-form reveal" onsubmit="cf(event)">
+    <div class="rf-group">
+      <label class="rf-label">Your Name</label>
+      <input type="text" class="rf-input" placeholder="Kyaw Zin Thant" required/>
+    </div>
+    <div class="rf-group">
+      <label class="rf-label">Email Address</label>
+      <input type="email" class="rf-input" placeholder="hello@example.com" required/>
+    </div>
+    <div class="rf-group">
+      <label class="rf-label">Project Details</label>
+      <textarea class="rf-input" rows="5" placeholder="Describe your project vision..." required style="resize:none"></textarea>
+    </div>
+    <button type="submit" class="btn-royal" style="align-self:flex-start;border:none;cursor:pointer">Submit Enquiry ◆</button>
+    <div id="ok" style="display:none;font-size:.65rem;letter-spacing:.3em;color:var(--gold2);margin-top:.75rem">
+      ◆ ENQUIRY RECEIVED — Response within 24 hours
+    </div>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<div class="gold-bar"></div>
+<footer>
+  <div class="footer-crest">MOE KYAW AUNG ◆ MMXXV</div>
+  <div class="footer-info">© 2025 မိုးကျော်အောင် · Portfolio V8 Royal Velvet Edition</div>
+  <div class="footer-soc">
+    <a href="https://github.com/Dev-moe-kyawaung" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/moe-kyaw-aung-2653093a1" target="_blank">LinkedIn</a>
+    <a href="https://bsky.app/profile/moekyawaung96.bsky.social" target="_blank">Bluesky</a>
+  </div>
+</footer>
+
+<button id="btt" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const cur=document.getElementById('cur');
+const cur2=document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function a(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cur2.style.left=rx+'px';cur2.style.top=ry+'px';requestAnimationFrame(a)})();
+const obs=new IntersectionObserver(e=>e.forEach(en=>{
+  if(en.isIntersecting){
+    en.target.classList.add('in');
+    en.target.querySelectorAll('.src-fill').forEach(b=>b.style.width=b.dataset.w+'%');
+  }
+}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+addEventListener('scroll',()=>document.getElementById('btt').classList.toggle('show',scrollY>400));
+function cf(e){
+  e.preventDefault();
+  document.getElementById('ok').style.display='block';
+  e.target.reset();
+  setTimeout(()=>document.getElementById('ok').style.display='none',6000);
+}
+</script>
+</body>
+</html>
