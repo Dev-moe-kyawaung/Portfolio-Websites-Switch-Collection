@@ -1,0 +1,89 @@
+name: 🚀 Deploy Portfolio to GitHub Pages
+
+# ──────────────────────────────────────────────────────────
+# Triggers: push to main, or manual dispatch
+# ──────────────────────────────────────────────────────────
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Required permissions for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deployment at a time
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # ── Job 1: Build ────────────────────────────────────────
+  build:
+    name: 📦 Build Portfolio
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔍 Validate HTML files exist
+        run: |
+          echo "🎨 Checking portfolio theme files..."
+          for f in index.html v1/index.html v2/index.html v3/index.html v4/index.html v5/index.html v6/index.html v7/index.html; do
+            if [ -f "$f" ]; then
+              echo "  ✅ Found: $f ($(wc -c < $f) bytes)"
+            else
+              echo "  ⚠️  Missing: $f"
+            fi
+          done
+
+      - name: 📄 List repository contents
+        run: |
+          echo "📁 Repository structure:"
+          find . -name "*.html" | sort
+          echo ""
+          echo "📊 Total HTML files: $(find . -name '*.html' | wc -l)"
+
+      - name: ⚙️ Setup GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📤 Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+  # ── Job 2: Deploy ───────────────────────────────────────
+  deploy:
+    name: 🌐 Deploy to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: ✅ Deployment Complete
+        run: |
+          echo ""
+          echo "════════════════════════════════════════════"
+          echo "  ✅ Portfolio deployed successfully!"
+          echo "════════════════════════════════════════════"
+          echo ""
+          echo "  🌐 Main:        ${{ steps.deployment.outputs.page_url }}"
+          echo "  🖤 V1 Obsidian: ${{ steps.deployment.outputs.page_url }}v1/"
+          echo "  🌌 V2 Aurora:   ${{ steps.deployment.outputs.page_url }}v2/"
+          echo "  🟦 V3 Cyber:    ${{ steps.deployment.outputs.page_url }}v3/"
+          echo "  🌿 V4 Japandi:  ${{ steps.deployment.outputs.page_url }}v4/"
+          echo "  👑 V5 Royal:    ${{ steps.deployment.outputs.page_url }}v5/"
+          echo "  🌈 V6 Holo:     ${{ steps.deployment.outputs.page_url }}v6/"
+          echo "  🪔 V7 Bagan:    ${{ steps.deployment.outputs.page_url }}v7/"
+          echo ""
+          echo "  👤 GitHub:      https://github.com/Dev-moe-kyawaung"
+          echo "  မိုးကျော်အောင် · Moe Kyaw Aung · Senior Android Developer"
+          echo ""
