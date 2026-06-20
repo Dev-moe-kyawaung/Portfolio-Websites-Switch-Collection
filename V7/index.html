@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Moe Kyaw Aung — Senior Android Developer. Bagan Midnight Myanmar Portfolio."/>
+<title>MKA · ဗဂန် BAGAN MIDNIGHT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:wght@200;300;400;500;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --night:#06090e;
+  --deep:#08101a;
+  --indigo:#0d1b2e;
+  --cobalt:#102035;
+  --gold1:#c8a84b;
+  --gold2:#e8cc7a;
+  --gold3:#f5e2a8;
+  --ember:#c0562a;
+  --sky:#1a6fa8;
+  --moon:#f0e8d0;
+  --star:rgba(240,232,208,0.55);
+  --gold-glow:rgba(200,168,75,0.25);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--night);
+  color:var(--moon);
+  font-family:'Raleway',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* STAR FIELD */
+#starfield{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.7}
+
+/* CURSOR */
+#cur{
+  position:fixed;width:10px;height:10px;
+  background:var(--gold1);border-radius:50%;
+  box-shadow:0 0 12px var(--gold1),0 0 24px var(--gold-glow);
+  pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
+}
+#cur2{
+  position:fixed;width:38px;height:38px;border-radius:50%;
+  border:1px solid rgba(200,168,75,0.4);
+  pointer-events:none;z-index:9998;transform:translate(-50%,-50%);
+  transition:transform .1s;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:1.25rem 4rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(6,9,14,0.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(200,168,75,0.12);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:0.75rem;text-decoration:none;
+}
+.nav-logo-mm{
+  font-size:1.4rem;line-height:1;color:var(--gold1);
+  letter-spacing:0.05em;
+  text-shadow:0 0 12px var(--gold-glow);
+}
+.nav-logo-en{
+  font-family:'Libre Baskerville',serif;
+  font-size:0.75rem;letter-spacing:0.2em;
+  color:rgba(240,232,208,0.5);
+  text-transform:uppercase;
+}
+.nav-links{list-style:none;display:flex;gap:2.5rem}
+.nav-links a{
+  font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:400;
+  color:rgba(240,232,208,0.45);text-decoration:none;
+  transition:color .3s;
+}
+.nav-links a:hover{color:var(--gold2)}
+.nav-mm{
+  font-size:0.7rem;letter-spacing:0.12em;
+  color:var(--gold1);
+  padding:0.5rem 1.25rem;
+  border:1px solid rgba(200,168,75,0.3);
+  text-decoration:none;
+  transition:background .3s;
+}
+.nav-mm:hover{background:rgba(200,168,75,0.08)}
+
+/* BAGAN SVG SKYLINE */
+.bagan-skyline{
+  position:absolute;bottom:0;left:0;right:0;
+  height:220px;pointer-events:none;z-index:1;
+  opacity:0.18;
+}
+
+/* HERO */
+#hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:5rem 2rem 8rem;
+  overflow:hidden;
+}
+/* Moon glow */
+.moon-glow{
+  position:absolute;top:8%;left:50%;transform:translateX(-50%);
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,232,208,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-pagoda{
+  font-size:2.5rem;margin-bottom:1.5rem;
+  filter:drop-shadow(0 0 12px var(--gold1));
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero-burmese{
+  font-size:2.2rem;letter-spacing:0.15em;
+  color:var(--gold2);margin-bottom:0.5rem;
+  text-shadow:0 0 20px var(--gold-glow);
+}
+.hero-name{
+  font-family:'Libre Baskerville',serif;
+  font-size:clamp(3rem,7vw,6.5rem);
+  font-weight:700;line-height:0.95;
+  color:var(--moon);margin-bottom:0.75rem;
+  letter-spacing:-0.02em;
+}
+.hero-name em{
+  font-style:italic;color:var(--gold1);
+  text-shadow:0 0 30px var(--gold-glow);
+}
+.hero-role{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:1.3rem;color:var(--star);
+  margin:1rem 0;letter-spacing:0.04em;
+}
+.hero-divider{
+  display:flex;align-items:center;gap:1rem;
+  justify-content:center;margin:1.5rem 0;
+}
+.hd-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold1))}
+.hd-line:last-child{background:linear-gradient(270deg,transparent,var(--gold1))}
+.hd-diamond{color:var(--gold1);font-size:0.7rem}
+.hero-desc{
+  font-size:0.9rem;line-height:2;font-weight:300;
+  color:var(--star);max-width:520px;margin:0 auto 2.5rem;
+}
+.hero-avatar{
+  width:140px;height:140px;border-radius:50%;object-fit:cover;
+  margin:0 auto 2rem;
+  border:2px solid var(--gold1);
+  box-shadow:0 0 0 6px rgba(200,168,75,0.08),0 0 30px var(--gold-glow);
+  filter:sepia(15%)contrast(1.05);
+}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-bagan{
+  font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;font-weight:400;
+  padding:0.9rem 2.2rem;text-decoration:none;
+  background:linear-gradient(135deg,var(--gold1),var(--gold2));
+  color:var(--night);
+  transition:transform .3s,box-shadow .3s;
+}
+.btn-bagan:hover{transform:translateY(-3px);box-shadow:0 10px 32px var(--gold-glow)}
+.btn-bagan-ghost{
+  font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;font-weight:400;
+  padding:0.9rem 2.2rem;text-decoration:none;
+  border:1px solid rgba(200,168,75,0.35);color:var(--gold2);
+  transition:background .3s,border-color .3s;
+}
+.btn-bagan-ghost:hover{background:rgba(200,168,75,0.06);border-color:var(--gold1)}
+
+/* STATS BAR */
+.stats-band{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--indigo);
+  border-top:1px solid rgba(200,168,75,0.1);
+  border-bottom:1px solid rgba(200,168,75,0.1);
+}
+.sb-item{
+  padding:2.5rem 1.5rem;text-align:center;
+  border-right:1px solid rgba(200,168,75,0.08);
+  position:relative;
+}
+.sb-item::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold1),transparent);
+  transform:scaleX(0);transition:transform .5s;
+}
+.sb-item:hover::after{transform:scaleX(1)}
+.sb-item:last-child{border-right:none}
+.sb-n{
+  font-family:'Libre Baskerville',serif;
+  font-size:3rem;font-weight:700;
+  color:var(--gold2);line-height:1;
+  text-shadow:0 0 20px var(--gold-glow);
+}
+.sb-l{
+  font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;
+  color:rgba(240,232,208,0.3);margin-top:0.4rem;font-weight:400;
+}
+.sb-mm{
+  font-size:0.75rem;color:rgba(200,168,75,0.4);margin-top:0.2rem;
+}
+
+/* ABOUT */
+#about{
+  position:relative;z-index:1;padding:6rem 4rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+}
+.about-img-section{position:relative}
+.ai-frame{
+  position:relative;
+  border:1px solid rgba(200,168,75,0.2);
+  padding:1rem;background:var(--indigo);
+}
+.ai-frame::before,.ai-frame::after{
+  content:'◆';position:absolute;color:var(--gold1);font-size:0.8rem;
+}
+.ai-frame::before{top:-10px;left:-10px}
+.ai-frame::after{bottom:-10px;right:-10px}
+.ai-img{
+  width:100%;aspect-ratio:3/4;object-fit:cover;
+  filter:sepia(25%)contrast(1.05);
+}
+.ai-caption{
+  margin-top:1.5rem;text-align:center;
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:0.95rem;color:var(--star);
+}
+.ai-mm{font-size:1.3rem;color:var(--gold2);display:block;margin-bottom:0.25rem;font-style:normal}
+.about-text{}
+.at-eyebrow{
+  font-size:0.62rem;letter-spacing:0.45em;text-transform:uppercase;
+  color:var(--gold1);margin-bottom:1.25rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.at-eyebrow::before{content:'◆';font-size:0.55rem}
+.at-h{
+  font-family:'Libre Baskerville',serif;
+  font-size:clamp(2rem,4vw,3rem);font-weight:700;
+  color:var(--moon);line-height:1.1;margin-bottom:2rem;
+}
+.at-h em{font-style:italic;color:var(--gold1)}
+.at-p{font-size:0.88rem;line-height:2.1;font-weight:300;color:var(--star);margin-bottom:1.25rem}
+.burmese-note{
+  font-size:1.1rem;color:var(--gold2);
+  border-left:3px solid var(--gold1);padding-left:1rem;margin:1.5rem 0;
+  text-shadow:0 0 12px var(--gold-glow);
+}
+.tech-list{
+  display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem;
+}
+.tl-item{
+  font-size:0.65rem;letter-spacing:0.15em;font-weight:400;
+  padding:0.4rem 0.9rem;
+  border:1px solid rgba(200,168,75,0.2);
+  color:rgba(240,232,208,0.55);
+  transition:border-color .3s,color .3s;
+}
+.tl-item:hover{border-color:var(--gold1);color:var(--gold2)}
+
+/* SKILLS */
+#skills{
+  position:relative;z-index:1;padding:6rem 4rem;
+  background:var(--indigo);
+}
+.bagan-divider{
+  display:flex;align-items:center;gap:1.5rem;margin-bottom:3rem;
+}
+.bd-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(200,168,75,0.3),transparent)}
+.bd-line:first-child{background:linear-gradient(270deg,rgba(200,168,75,0.3),transparent)}
+.bd-label{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:1.4rem;color:var(--gold1);white-space:nowrap;
+  text-shadow:0 0 12px var(--gold-glow);
+}
+.skills-bagan{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.sb-card{
+  padding:2rem;
+  background:rgba(13,27,46,0.7);
+  border:1px solid rgba(200,168,75,0.1);
+  position:relative;
+  transition:border-color .3s;
+}
+.sb-card:hover{border-color:rgba(200,168,75,0.3)}
+.sb-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--gold1),transparent);
+  transform:scaleY(0);transform-origin:top;transition:transform .4s;
+}
+.sb-card:hover::before{transform:scaleY(1)}
+.sbc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem}
+.sbc-title{
+  font-family:'Libre Baskerville',serif;
+  font-size:1.05rem;color:var(--moon);font-weight:400;
+}
+.sbc-pct{
+  font-size:0.7rem;letter-spacing:0.1em;
+  color:var(--gold1);font-weight:500;
+}
+.sbc-desc{font-size:0.78rem;line-height:1.75;color:var(--star);margin-bottom:1.25rem}
+.sbc-bar{height:2px;background:rgba(200,168,75,0.1)}
+.sbc-fill{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--gold1),var(--gold2));
+  box-shadow:0 0 8px var(--gold-glow);
+  transition:width 1.5s ease;
+}
+
+/* PROJECTS */
+#projects{position:relative;z-index:1;padding:6rem 4rem}
+.proj-bagan{display:flex;flex-direction:column;gap:0}
+.pb-item{
+  display:grid;grid-template-columns:80px 1fr auto;
+  align-items:center;gap:2rem;
+  padding:2rem 0;
+  border-bottom:1px solid rgba(200,168,75,0.07);
+  transition:padding-left .3s;
+  cursor:none;
+}
+.pb-item:hover{padding-left:1rem}
+.pb-n{
+  font-family:'Libre Baskerville',serif;font-style:italic;
+  font-size:2.5rem;color:rgba(200,168,75,0.15);
+  line-height:1;
+}
+.pb-info h3{
+  font-family:'Libre Baskerville',serif;
+  font-size:1.4rem;color:var(--moon);font-weight:400;
+  margin-bottom:0.4rem;
+}
+.pb-tags{display:flex;flex-wrap:wrap;gap:0.4rem}
+.pb-tag{
+  font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;
+  padding:0.2rem 0.65rem;
+  border:1px solid rgba(200,168,75,0.15);
+  color:rgba(240,232,208,0.45);
+}
+.pb-arrow{
+  font-family:'Libre Baskerville',serif;
+  font-size:1.4rem;color:rgba(200,168,75,0.2);
+  transition:color .3s,transform .3s;
+}
+.pb-item:hover .pb-arrow{color:var(--gold1);transform:translate(4px,-4px)}
+
+/* CONTACT */
+#contact{
+  position:relative;z-index:1;padding:6rem 4rem;
+  background:var(--indigo);
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;
+}
+.contact-bagan h2{
+  font-family:'Libre Baskerville',serif;
+  font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;
+  color:var(--moon);line-height:1;margin-bottom:0.5rem;
+}
+.contact-bagan h2 em{
+  font-style:italic;color:var(--gold1);
+  text-shadow:0 0 20px var(--gold-glow);
+}
+.contact-mm-text{
+  font-size:1.8rem;color:var(--gold2);margin-bottom:1.5rem;
+  text-shadow:0 0 12px var(--gold-glow);
+}
+.contact-bagan p{font-size:0.87rem;line-height:2;font-weight:300;color:var(--star);margin-bottom:2rem}
+.cb-info{display:flex;flex-direction:column;gap:1rem}
+.cbi{
+  display:flex;align-items:flex-start;gap:1.25rem;
+  padding:1rem;
+  border:1px solid rgba(200,168,75,0.08);
+  transition:border-color .3s;
+}
+.cbi:hover{border-color:rgba(200,168,75,0.25)}
+.cbi-icon{color:var(--gold1);font-size:0.9rem;margin-top:0.1rem;flex-shrink:0}
+.cbi-k{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold1);font-weight:400}
+.cbi-v{font-size:0.85rem;color:var(--moon);font-weight:300}
+.cbi-v a{color:var(--gold2);text-decoration:none}
+.cbi-v a:hover{text-decoration:underline}
+.bagan-form{display:flex;flex-direction:column;gap:1.25rem}
+.bf-label{
+  font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--gold1);display:block;margin-bottom:0.5rem;font-weight:400;
+}
+.bf-input{
+  width:100%;background:rgba(6,9,14,0.7);
+  border:1px solid rgba(200,168,75,0.15);
+  color:var(--moon);
+  font-family:'Raleway',sans-serif;font-size:0.87rem;font-weight:300;
+  padding:0.85rem 1rem;outline:none;
+  transition:border-color .3s;
+}
+.bf-input:focus{border-color:var(--gold1)}
+.bf-input::placeholder{color:rgba(240,232,208,0.2)}
+
+/* FOOTER */
+footer{
+  position:relative;z-index:1;
+  background:var(--deep);
+  border-top:1px solid rgba(200,168,75,0.12);
+  padding:3rem 4rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;
+}
+.footer-mm{font-size:1.5rem;color:var(--gold2);text-shadow:0 0 10px var(--gold-glow)}
+.footer-en{
+  font-family:'Libre Baskerville',serif;
+  font-size:0.75rem;letter-spacing:0.15em;
+  color:rgba(240,232,208,0.25);
+}
+.footer-soc{display:flex;gap:1rem}
+.footer-soc a{
+  font-size:0.62rem;letter-spacing:0.2em;font-weight:300;
+  color:rgba(200,168,75,0.45);text-decoration:none;
+  padding:0.4rem 0.9rem;
+  border:1px solid rgba(200,168,75,0.12);
+  transition:all .3s;
+}
+.footer-soc a:hover{color:var(--gold2);border-color:var(--gold1)}
+
+/* BACK TOP */
+#btt{
+  position:fixed;bottom:2rem;right:2rem;z-index:900;
+  width:44px;height:44px;
+  background:linear-gradient(135deg,var(--gold1),var(--gold2));
+  border:none;color:var(--night);cursor:none;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .3s,transform .3s;
+  box-shadow:0 0 20px var(--gold-glow);
+}
+#btt.show{opacity:1;transform:translateY(0)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .85s ease,transform .85s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  nav{padding:1rem 2rem}.nav-links{display:none}
+  #hero{padding:5rem 1.5rem 6rem}
+  #about{grid-template-columns:1fr;padding:4rem 2rem;gap:3rem}
+  .about-img-section{display:none}
+  #skills{padding:4rem 2rem}.skills-bagan{grid-template-columns:1fr}
+  #projects{padding:4rem 2rem}.pb-item{grid-template-columns:60px 1fr}
+  .pb-arrow{display:none}
+  #contact{grid-template-columns:1fr;padding:4rem 2rem;gap:3rem}
+  .stats-band{grid-template-columns:1fr 1fr}
+  .sb-item{border-bottom:1px solid rgba(200,168,75,.06)}
+  footer{padding:2rem}
+}
+</style>
+</head>
+<body>
+<canvas id="starfield"></canvas>
+<div id="cur"></div><div id="cur2"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mm">မိုးကျော်</div>
+    <div class="nav-logo-en">MKA · Android Dev</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-mm">ဆက်သွယ်ပါ</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="moon-glow"></div>
+
+  <!-- Bagan Skyline SVG -->
+  <svg class="bagan-skyline" viewBox="0 0 1400 220" preserveAspectRatio="xMidYMax meet" fill="var(--moon)">
+    <!-- Pagoda 1 (large center) -->
+    <polygon points="700,10 680,60 660,100 640,130 620,155 600,175 560,210 840,210 800,175 780,155 760,130 740,100 720,60 700,10"/>
+    <rect x="560" y="200" width="280" height="20"/>
+    <!-- Pagoda 2 (left) -->
+    <polygon points="280,40 265,80 250,110 235,135 215,160 195,190 170,210 390,210 365,190 345,160 325,135 310,110 295,80 280,40"/>
+    <rect x="170" y="200" width="220" height="20"/>
+    <!-- Pagoda 3 (right) -->
+    <polygon points="1120,50 1108,85 1095,115 1080,140 1060,165 1040,190 1010,210 1230,210 1200,190 1180,165 1160,140 1145,115 1132,85 1120,50"/>
+    <rect x="1010" y="200" width="220" height="20"/>
+    <!-- Small stupa left -->
+    <polygon points="100,80 92,105 84,125 76,145 68,165 50,210 150,210 132,165 124,145 116,125 108,105 100,80"/>
+    <!-- Small stupa right -->
+    <polygon points="1300,90 1292,112 1284,130 1276,148 1268,165 1252,210 1348,210 1332,165 1324,148 1316,130 1308,112 1300,90"/>
+    <!-- Ground line -->
+    <rect x="0" y="208" width="1400" height="12"/>
+  </svg>
+
+  <div>
+    <div class="hero-pagoda">🪔</div>
+    <div class="hero-burmese">မိုးကျော်အောင်</div>
+    <img src="https://0.gravatar.com/avatar/a2dae9a29fbf7c72552047efc744be54a018938aacd9009e7500f93d72eb0f2e?size=280" class="hero-avatar" alt="Moe Kyaw Aung"/>
+    <h1 class="hero-name">Moe <em>Kyaw</em><br>Aung</h1>
+    <p class="hero-role">Senior Android Developer · Microsoft · Tachileik, Myanmar 🇲🇲</p>
+    <div class="hero-divider">
+      <div class="hd-line"></div>
+      <div class="hd-diamond">◆</div>
+      <div class="hd-diamond" style="font-size:.5rem;opacity:.5">◆</div>
+      <div class="hd-diamond">◆</div>
+      <div class="hd-line"></div>
+    </div>
+    <p class="hero-desc">Nearly 12 years engineering secure, scalable Android applications. From Kotlin architecture to Play Store release — crafting mobile experiences with the precision of a pagoda builder.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-bagan">View My Work</a>
+      <a href="#contact" class="btn-bagan-ghost">ဆက်သွယ်ပါ · Contact</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="sb-item reveal">
+    <div class="sb-n">12+</div>
+    <div class="sb-l">Years Experience</div>
+    <div class="sb-mm">နှစ်</div>
+  </div>
+  <div class="sb-item reveal">
+    <div class="sb-n">48+</div>
+    <div class="sb-l">Apps Shipped</div>
+    <div class="sb-mm">App များ</div>
+  </div>
+  <div class="sb-item reveal">
+    <div class="sb-n">35+</div>
+    <div class="sb-l">Certifications</div>
+    <div class="sb-mm">လက်မှတ်များ</div>
+  </div>
+  <div class="sb-item reveal">
+    <div class="sb-n">1.2M+</div>
+    <div class="sb-l">Downloads</div>
+    <div class="sb-mm">ဒေါင်းလုတ်</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img-section reveal">
+    <div class="ai-frame">
+      <img src="https://0.gravatar.com/avatar/a2dae9a29fbf7c72552047efc744be54a018938aacd9009e7500f93d72eb0f2e?size=600" class="ai-img" alt="Moe Kyaw Aung"/>
+    </div>
+    <div class="ai-caption">
+      <span class="ai-mm">မိုးကျော်အောင်</span>
+      Senior Android Developer · Microsoft<br>Tachileik, Shan State, Myanmar 🇲🇲
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="at-eyebrow">About / ကျွန်တော်အကြောင်း</div>
+    <h2 class="at-h">Precision Crafted.<br><em>Myanmar Proud.</em></h2>
+    <p class="at-p">I'm a Senior Android Developer at Microsoft, based in Tachileik, Myanmar. With nearly 12 years of experience, I build production-grade Android applications that prioritise security, scalability, and clean architecture.</p>
+    <p class="at-p">Like the ancient pagoda builders of Bagan who engineered structures to last centuries — I engineer code to endure. Maintainable, testable, and purposeful.</p>
+    <div class="burmese-note">Android ဆော့ဖ်ဝဲဖန်တီးခြင်း — မြန်မာနိုင်ငံ ကံကောင်းပါစေ 🙏</div>
+    <div class="tech-list">
+      <span class="tl-item">Kotlin</span><span class="tl-item">Jetpack Compose</span>
+      <span class="tl-item">MVVM / Clean Arch</span><span class="tl-item">Firebase</span>
+      <span class="tl-item">Hilt / Dagger</span><span class="tl-item">Room DB</span>
+      <span class="tl-item">GitHub Actions</span><span class="tl-item">Ethical Hacking</span>
+      <span class="tl-item">ML Kit</span><span class="tl-item">Claude API</span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="bagan-divider reveal">
+    <div class="bd-line"></div>
+    <div class="bd-label">Core Expertise · ကျွမ်းကျင်မှု</div>
+    <div class="bd-line"></div>
+  </div>
+  <div class="skills-bagan">
+    <div class="sb-card reveal">
+      <div class="sbc-header"><div class="sbc-title">Android Development</div><div class="sbc-pct">98%</div></div>
+      <div class="sbc-desc">Kotlin, Jetpack Compose, Material 3, full lifecycle app development with modern Jetpack libraries.</div>
+      <div class="sbc-bar"><div class="sbc-fill" data-w="98"></div></div>
+    </div>
+    <div class="sb-card reveal">
+      <div class="sbc-header"><div class="sbc-title">Clean Architecture</div><div class="sbc-pct">96%</div></div>
+      <div class="sbc-desc">MVVM, Clean Architecture, Hilt DI, multi-module Gradle. Systems built to outlast any product roadmap.</div>
+      <div class="sbc-bar"><div class="sbc-fill" data-w="96"></div></div>
+    </div>
+    <div class="sb-card reveal">
+      <div class="sbc-header"><div class="sbc-title">Firebase & REST APIs</div><div class="sbc-pct">94%</div></div>
+      <div class="sbc-desc">Firestore, Functions, Auth, Crashlytics. Retrofit + Room for offline-first architecture.</div>
+      <div class="sbc-bar"><div class="sbc-fill" data-w="94"></div></div>
+    </div>
+    <div class="sb-card reveal">
+      <div class="sbc-header"><div class="sbc-title">Security Engineering</div><div class="sbc-pct">88%</div></div>
+      <div class="sbc-desc">Ethical hacking, penetration testing, certificate pinning, ProGuard, encryption at every layer.</div>
+      <div class="sbc-bar"><div class="sbc-fill" data-w="88"></div></div>
+    </div>
+    <div class="sb-card reveal">
+      <div class="sbc-header"><div class="sbc-title">CI/CD Automation</div><div class="sbc-pct">92%</div></div>
+      <div class="sbc-desc">5-workflow GitHub Actions suite: lint, tests, signing, Play Store release. Fully automated.</div>
+      <div class="sbc-bar"><div class="sbc-fill" data-w="92"></div></div>
+    </div>
+    <div class="sb-card reveal">
+      <div class="sbc-header"><div class="sbc-title">AI / ML Integration</div><div class="sbc-pct">85%</div></div>
+      <div class="sbc-desc">TFLite, ML Kit, Claude API, Gemini. On-device inference and cloud AI for intelligent features.</div>
+      <div class="sbc-bar"><div class="sbc-fill" data-w="85"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="bagan-divider reveal">
+    <div class="bd-line"></div>
+    <div class="bd-label">Selected Work · ပရောဂျက်များ</div>
+    <div class="bd-line"></div>
+  </div>
+  <div class="proj-bagan">
+    <div class="pb-item reveal">
+      <div class="pb-n">I</div>
+      <div class="pb-info"><h3>MoekyawTranslator</h3><div class="pb-tags"><span class="pb-tag">Kotlin</span><span class="pb-tag">Claude API</span><span class="pb-tag">Firebase</span><span class="pb-tag">8 Languages</span></div></div>
+      <div class="pb-arrow">↗</div>
+    </div>
+    <div class="pb-item reveal">
+      <div class="pb-n">II</div>
+      <div class="pb-info"><h3>PulseSync Azure</h3><div class="pb-tags"><span class="pb-tag">MSAL</span><span class="pb-tag">Azure OpenAI</span><span class="pb-tag">Cosmos DB</span><span class="pb-tag">SignalR</span></div></div>
+      <div class="pb-arrow">↗</div>
+    </div>
+    <div class="pb-item reveal">
+      <div class="pb-n">III</div>
+      <div class="pb-info"><h3>Compose Design System</h3><div class="pb-tags"><span class="pb-tag">Jetpack Compose</span><span class="pb-tag">Material 3</span><span class="pb-tag">100+ Components</span></div></div>
+      <div class="pb-arrow">↗</div>
+    </div>
+    <div class="pb-item reveal">
+      <div class="pb-n">IV</div>
+      <div class="pb-info"><h3>Android CI/CD Suite</h3><div class="pb-tags"><span class="pb-tag">GitHub Actions</span><span class="pb-tag">5 Workflows</span><span class="pb-tag">Fastlane</span></div></div>
+      <div class="pb-arrow">↗</div>
+    </div>
+    <div class="pb-item reveal">
+      <div class="pb-n">V</div>
+      <div class="pb-info"><h3>Acode DevX Plugin</h3><div class="pb-tags"><span class="pb-tag">JavaScript</span><span class="pb-tag">13 Themes</span><span class="pb-tag">1200+ Installs</span></div></div>
+      <div class="pb-arrow">↗</div>
+    </div>
+    <div class="pb-item reveal">
+      <div class="pb-n">VI</div>
+      <div class="pb-info"><h3>Thailand Resources Hub</h3><div class="pb-tags"><span class="pb-tag">Room DB</span><span class="pb-tag">Offline-First</span><span class="pb-tag">Myanmar Workers</span></div></div>
+      <div class="pb-arrow">↗</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:3rem">
+    <a href="https://github.com/Dev-moe-kyawaung" target="_blank" class="btn-bagan-ghost">GitHub ↗ Dev-moe-kyawaung</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-bagan reveal">
+    <div class="contact-mm-text">ဆက်သွယ်ပါ</div>
+    <h2>Let's Build<br><em>Something Great.</em></h2>
+    <p>Available for Android development projects, architecture consulting, security reviews, and AI/ML integrations. Based in Myanmar, delivering globally.</p>
+    <div class="cb-info">
+      <div class="cbi"><div class="cbi-icon">✉</div><div><div class="cbi-k">Email</div><div class="cbi-v"><a href="mailto:moekyawaung@fastmail.com">moekyawaung@fastmail.com</a></div></div></div>
+      <div class="cbi"><div class="cbi-icon">◈</div><div><div class="cbi-k">GitHub</div><div class="cbi-v"><a href="https://github.com/Dev-moe-kyawaung" target="_blank">Dev-moe-kyawaung</a></div></div></div>
+      <div class="cbi"><div class="cbi-icon">◉</div><div><div class="cbi-k">Location</div><div class="cbi-v">Tachileik, Shan State, Myanmar 🇲🇲</div></div></div>
+      <div class="cbi"><div class="cbi-icon">◆</div><div><div class="cbi-k">LinkedIn</div><div class="cbi-v"><a href="https://www.linkedin.com/in/moe-kyaw-aung-2653093a1" target="_blank">moe-kyaw-aung</a></div></div></div>
+    </div>
+  </div>
+  <form class="bagan-form reveal" onsubmit="cf(event)">
+    <div><label class="bf-label">Name / အမည်</label><input type="text" class="bf-input" placeholder="Kyaw Zin Thant" required/></div>
+    <div><label class="bf-label">Email</label><input type="email" class="bf-input" placeholder="hello@example.com" required/></div>
+    <div><label class="bf-label">Message / စာပေးပို့ပါ</label><textarea class="bf-input" rows="6" placeholder="Tell me about your project..." required style="resize:none"></textarea></div>
+    <button type="submit" class="btn-bagan" style="border:none;cursor:pointer;align-self:flex-start">ပေးပို့မည် · Send Message</button>
+    <div id="ok" style="display:none;font-size:.72rem;letter-spacing:.2em;color:var(--gold2);margin-top:.75rem">◆ သင့်စာပေးပို့ပြီးပါပြီ — 24 နာရီအတွင်း ပြန်ကြားပါမည်</div>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-mm">မိုးကျော်အောင် ◆ 2025</div>
+    <div class="footer-en" style="margin-top:.25rem">Myanmar · Senior Android Developer · Portfolio V8 Bagan</div>
+  </div>
+  <div class="footer-en">© 2025 Moe Kyaw Aung · All Rights Reserved · Tachileik 🇲🇲</div>
+  <div class="footer-soc">
+    <a href="https://github.com/Dev-moe-kyawaung" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/moe-kyaw-aung-2653093a1" target="_blank">LinkedIn</a>
+    <a href="https://bsky.app/profile/moekyawaung96.bsky.social" target="_blank">Bluesky</a>
+    <a href="https://tiktok.com/@moelay262411" target="_blank">TikTok</a>
+    <a href="https://www.youtube.com/channel/UCdGC3lLlIPnb2VIL_qS65OQ" target="_blank">YouTube</a>
+  </div>
+</footer>
+<button id="btt" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Starfield
+const sc=document.getElementById('starfield');
+const sx=sc.getContext('2d');
+sc.width=innerWidth;sc.height=innerHeight;
+addEventListener('resize',()=>{sc.width=innerWidth;sc.height=innerHeight});
+const stars=Array.from({length:200},()=>({
+  x:Math.random()*innerWidth,y:Math.random()*innerHeight,
+  r:Math.random()*1.5+0.3,a:Math.random(),
+  sp:Math.random()*0.01+0.003
+}));
+function drawStars(){
+  sx.clearRect(0,0,sc.width,sc.height);
+  stars.forEach(s=>{
+    s.a+=s.sp;if(s.a>1)s.a=0;
+    sx.beginPath();sx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    sx.fillStyle=`rgba(240,232,208,${Math.abs(Math.sin(s.a))})`;sx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// Cursor
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function a(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cur2.style.left=rx+'px';cur2.style.top=ry+'px';requestAnimationFrame(a)})();
+
+// Reveal
+const obs=new IntersectionObserver(e=>e.forEach(en=>{
+  if(en.isIntersecting){en.target.classList.add('in');en.target.querySelectorAll('.sbc-fill').forEach(b=>b.style.width=b.dataset.w+'%')}
+}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+addEventListener('scroll',()=>document.getElementById('btt').classList.toggle('show',scrollY>400));
+function cf(e){e.preventDefault();document.getElementById('ok').style.display='block';e.target.reset();setTimeout(()=>document.getElementById('ok').style.display='none',6000)}
+</script>
+</body>
+</html>
